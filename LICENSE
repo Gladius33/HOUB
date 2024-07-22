@@ -1,23 +1,79 @@
-LICENCE
+### LICENSE
+
+**English Translation is available after the French text.**
+
+---
+
+### LICENCE
 
 Cette licence régit l'utilisation et la distribution du logiciel ("Freelance Marketplace").
-Conditions d'utilisation
 
-    Usage et modification
-        Vous êtes libre d'utiliser et de modifier cette application web, à la condition de citer la source originale du logiciel dans toutes les copies ou dérivés.
+#### Conditions d'utilisation
 
-    Citations
-        Toute utilisation ou modification de ce logiciel doit inclure une mention de l'auteur original et du logiciel source.
+1. **Usage et modification**
+    - Vous êtes libre d'utiliser et de modifier cette application web, à la condition de citer la source originale du logiciel dans toutes les copies ou dérivés.
 
-    Utilisation lucrative
-        Toute utilisation lucrative de ce logiciel rapportant un chiffre d'affaires annuel supérieur à 100.000 euros (ou équivalent dans une autre devise) nécessite le versement de 5% de royalties annuelles à l'auteur original du logiciel.
-        Cette obligation s'applique même si le logiciel a été modifié par un tiers.
+2. **Citations**
+    - Toute utilisation ou modification de ce logiciel doit inclure une mention de l'auteur original et du logiciel source.
 
-Dispositions générales
+3. **Utilisation lucrative**
+    - Toute utilisation lucrative de ce logiciel rapportant un chiffre d'affaires annuel supérieur à 100.000 euros (ou équivalent dans une autre devise) nécessite le versement de 5% de royalties annuelles à l'auteur original du logiciel.
+    - Cette obligation s'applique même si le logiciel a été modifié par un tiers.
 
-    Aucune garantie
-        Ce logiciel est fourni "tel quel", sans aucune garantie, expresse ou implicite, y compris mais sans s'y limiter, les garanties de qualité marchande ou d'adéquation à un usage particulier.
-        En aucun cas, l'auteur ou les contributeurs ne pourront être tenus responsables de dommages directs, indirects, accidentels, spéciaux, exemplaires ou consécutifs (y compris mais sans s'y limiter, l'acquisition de biens ou de services de substitution, la perte d'usage, de données ou de profits, ou l'interruption d'activité) toutefois causés et selon toute théorie de la responsabilité, que ce soit par contrat, responsabilité stricte ou délit (y compris négligence ou autre) résultant de quelque manière que ce soit de l'utilisation de ce logiciel, même si avisé de la possibilité de tels dommages.
+#### Dispositions générales
 
-    Acceptation de la licence
-        En utilisant ce logiciel, vous acceptez les termes et conditions de cette licence.
+1. **Aucune garantie**
+    - Ce logiciel est fourni "tel quel", sans aucune garantie, expresse ou implicite, y compris mais sans s'y limiter, les garanties de qualité marchande ou d'adéquation à un usage particulier.
+    - En aucun cas, l'auteur ou les contributeurs ne pourront être tenus responsables de dommages directs, indirects, accidentels, spéciaux, exemplaires ou consécutifs (y compris mais sans s'y limiter, l'acquisition de biens ou de services de substitution, la perte d'usage, de données ou de profits, ou l'interruption d'activité) toutefois causés et selon toute théorie de la responsabilité, que ce soit par contrat, responsabilité stricte ou délit (y compris négligence ou autre) résultant de quelque manière que ce soit de l'utilisation de ce logiciel, même si avisé de la possibilité de tels dommages.
+
+2. **Acceptation de la licence**
+    - En utilisant ce logiciel, vous acceptez les termes et conditions de cette licence.
+
+3. **Résiliation**
+    - Les droits accordés par cette licence prendront fin automatiquement si vous ne respectez pas les termes de cette licence.
+    - En cas de résiliation, vous devez cesser toute utilisation du logiciel et détruire toutes les copies de ce logiciel en votre possession.
+
+4. **Amendements**
+    - Cette licence peut être amendée par l'auteur original du logiciel, et toute nouvelle version sera publiée avec une nouvelle date d'effet.
+
+#### Informations de contact
+
+Pour toute question concernant cette licence, veuillez contacter l'auteur à l'adresse e-mail suivante : [email@example.com].
+
+---
+
+### LICENSE
+
+This license governs the use and distribution of the software ("Freelance Marketplace").
+
+#### Terms of Use
+
+1. **Usage and Modification**
+    - You are free to use and modify this web application, provided that the original source of the software is cited in all copies or derivatives.
+
+2. **Attribution**
+    - Any use or modification of this software must include a mention of the original author and the source software.
+
+3. **Commercial Use**
+    - Any commercial use of this software generating annual revenue exceeding 100,000 euros (or equivalent in another currency) requires an annual royalty payment of 5% to the original author of the software.
+    - This obligation applies even if the software has been modified by a third party.
+
+#### General Provisions
+
+1. **No Warranty**
+    - This software is provided "as is", without any warranty of any kind, express or implied, including but not limited to the warranties of merchantability or fitness for a particular purpose.
+    - In no event shall the author or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including but not limited to procurement of substitute goods or services, loss of use, data, or profits, or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
+
+2. **License Acceptance**
+    - By using this software, you agree to the terms and conditions of this license.
+
+3. **Termination**
+    - The rights granted by this license will terminate automatically if you fail to comply with the terms of this license.
+    - Upon termination, you must cease all use of the software and destroy all copies of this software in your possession.
+
+4. **Amendments**
+    - This license may be amended by the original author of the software, and any new version will be published with a new effective date.
+
+#### Contact Information
+
+For any questions regarding this license, please contact the author at the following email address: [email@example.com].
