@@ -1,6 +1,6 @@
 const express = require('express');
 const { uploadTranslation, getTranslations } = require('../../controllers/translationController');
-const auth = require('../backend/middleware/auth');
+const auth = require('../../middleware/auth');
 const adminAuth = require('../../middleware/adminAuth');
 
 const router = express.Router();

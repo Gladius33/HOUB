@@ -1,4 +1,4 @@
-const Translation = require('../backend/models/Translation');
+const Translation = require('../models/Translation');
 const multer = require('multer');
 const path = require('path');
 

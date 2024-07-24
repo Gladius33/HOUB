@@ -1,7 +1,7 @@
 const express = require('express');
-const { getCurrencies, createCurrency, updateCurrencyRates } = require('../controllers/currencyController');
-const auth = require('../backend/middleware/auth');
-const adminAuth = require('../middleware/adminAuth');
+const { getCurrencies, createCurrency, updateCurrencyRates } = require('../../controllers/currencyController');
+const auth = require('../../middleware/auth');
+const adminAuth = require('../../middleware/adminAuth');
 
 const router = express.Router();
 

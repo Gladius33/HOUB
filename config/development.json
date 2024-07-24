@@ -1,4 +1,9 @@
 {
-    "mongoURI": "mongodb://localhost:27017/votre_nom_de_base_de_donnees_dev"
-  }
+  "mongoURI": "mongodb+srv://gladius33_dev-houb:OXjtYxSD6xTmAKjT@dev.xjhlhjn.mongodb.net/?retryWrites=true&w=majority&appName=dev",
+  "port": 5000,
+  "jwtSecret": "yourSecretKey",
+  "emailUser": "your-email@gmail.com",
+  "emailPass": "your-email-password",
+  "contactEmail": "contact-receiver@example.com"
+}
   

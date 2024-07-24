@@ -8,19 +8,19 @@ connectDB();
 
 app.use(express.json({ extended: false }));
 
-app.use('/api/index', require('./routes/index'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/gigs', require('./routes/gigs'));
-app.use('/api/jobs', require('./routes/jobs'));
-app.use('/api/categories', require('./routes/categories'));
+app.use('/index', require('./routes/index'));
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/gigs', require('./routes/api/gigs'));
+app.use('/api/jobs', require('./routes/api/jobs'));
+app.use('/api/categories', require('./routes/api/categories'));
 app.use('/api/contact', require('./routes/api/contact'));
-app.use('/api/currencies', require('./routes/currencies'));
-app.use('/api/translations', require('./routes/translations'));
-app.use('/api/chats', require('./routes/chats'));
+app.use('/api/currencies', require('./routes/api/currencies'));
+app.use('/api/translations', require('./routes/api/translation'));
+app.use('/api/chats', require('./routes/api/chats'));
 app.use('/api/admin', require('./routes/api/admin'));
-app.use('/api/employers', require('./routes/employers'));
-app.use('/api/freelances', require('./routes/freelances'));
+app.use('/api/employers', require('./routes/api/employers'));
+app.use('/api/freelances', require('./routes/api/freelances'));
 
 
 if (process.env.NODE_ENV === 'production') {

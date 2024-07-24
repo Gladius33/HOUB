@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 
-const CurrencySchema = new Schema({
+const Currency = new Schema({
   USD: {
     type: Number
   },
@@ -15,5 +15,7 @@ const CurrencySchema = new Schema({
   // Add more currencies as needed
 }, { timestamps: true });
 
-export default model('Currency', CurrencySchema);
+    return mongoose.Model
+
+module.exports = Currency();
 
