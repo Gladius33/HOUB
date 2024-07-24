@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb+srv://gladius33_dev-houb:OXjtYxSD6xTmAKjT@dev.xjhlhjn.mongodb.net/?retryWrites=true&w=majority&appName=dev",
+  "mongoURI": "mongoURI",
   "port": 5000,
   "jwtSecret": "yourSecretKey",
   "emailUser": "your-email@gmail.com",
