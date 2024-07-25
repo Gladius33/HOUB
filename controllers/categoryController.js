@@ -1,6 +1,6 @@
-const Category = require('../models/Category');
+import Category from '../models/Category';
 
-exports.getCategories = async (req, res) => {
+export async function getCategories(req, res) {
   try {
     const categories = await Category.find();
     res.json(categories);
@@ -8,9 +8,9 @@ exports.getCategories = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}
 
-exports.createCategory = async (req, res) => {
+export async function createCategory(req, res) {
   const { name, description } = req.body;
 
   try {
@@ -26,9 +26,9 @@ exports.createCategory = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}
 
-exports.editCategory = async (req, res) => {
+export async function editCategory(req, res) {
   const { name, description } = req.body;
 
   try {
@@ -45,9 +45,9 @@ exports.editCategory = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}
 
-exports.deleteCategory = async (req, res) => {
+export async function deleteCategory(req, res) {
   try {
     let category = await Category.findById(req.params.id);
     if (!category) {
@@ -60,7 +60,7 @@ exports.deleteCategory = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}
 
 const initialCategories = [
   { name: 'SEO', description: 'Search Engine Optimization' },
@@ -76,7 +76,7 @@ const initialCategories = [
   { name: 'Cloud Computing', description: 'Services related to cloud infrastructure and services' },
 ];
 
-exports.initializeCategories = async (req, res) => {
+export async function initializeCategories(req, res) {
   try {
     await Category.insertMany(initialCategories);
     res.json({ msg: 'Categories initialized' });
@@ -84,4 +84,4 @@ exports.initializeCategories = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}

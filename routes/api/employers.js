@@ -1,7 +1,7 @@
 const express = require('express');
 const { check } = require('express-validator');
 const employerController = require('../../controllers/employerController');
-const authMiddleware = require('../../middleware/authMiddleware');
+const authMiddleware = require('../../middleware/authMiddleware').default;
 
 const router = express.Router();
 
@@ -31,4 +31,4 @@ router.post(
   employerController.upsertEmployer
 );
 
-module.exports = router;
+export default router;

@@ -1,9 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const { updateCurrencyRates } = require('../../controllers/adminController');
-const auth = require('../../middleware/auth');
-const adminAuth = require('../../middleware/adminAuth');
+import router from 'express.Router';
+import { updateCurrencyRates } from '../../controllers/adminController.js';
+import auth from '../../middleware/auth.js';
+import adminAuth from '../../middleware/adminAuth.js';
 
 router.post('currency', auth, adminAuth, updateCurrencyRates);
 
-module.exports = router;
+export default router;

@@ -1,15 +1,15 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+import jwt from 'jsonwebtoken';
+import User from '../models/User';
 
-exports.register = async (req, res) => {
+export async function register(req, res) {
   // registration logic
-};
+}
 
-exports.login = async (req, res) => {
+export async function login(req, res) {
   // login logic
-};
+}
 
-exports.getProfile = async (req, res) => {
+export async function getProfile(req, res) {
   try {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
@@ -17,9 +17,9 @@ exports.getProfile = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}
 
-exports.updateProfile = async (req, res) => {
+export async function updateProfile(req, res) {
   const {
     name,
     email,
@@ -73,4 +73,4 @@ exports.updateProfile = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}

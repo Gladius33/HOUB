@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const JobSchema = new mongoose.Schema({
+const JobSchema = new Schema({
   employer: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User'
   },
   title: {
@@ -63,7 +63,7 @@ const JobSchema = new mongoose.Schema({
   },
   applications: [{
     freelancer: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User'
     },
     status: {
@@ -84,4 +84,4 @@ const JobSchema = new mongoose.Schema({
   }]
 }, { timestamps: true });
 
-module.exports = mongoose.model('Job', JobSchema);
+export default model('Job', JobSchema);

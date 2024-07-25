@@ -1,7 +1,7 @@
 const express = require('express');
 const { check } = require('express-validator');
 const gigController = require('../../controllers/gigController');
-const authMiddleware = require('../../middleware/authMiddleware');
+const authMiddleware = require('../../middleware/authMiddleware').default;
 
 const router = express.Router();
 
@@ -39,4 +39,4 @@ router.post(
 // @access  Private
 router.delete('/:gigId', authMiddleware, gigController.deleteGig);
 
-module.exports = router;
+export default router;

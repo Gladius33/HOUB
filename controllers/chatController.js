@@ -1,9 +1,9 @@
-const Chat = require('../models/Chat');
-const User = require('../models/User');
-const Job = require('../models/Job');
+import Chat from '../models/Chat';
+import User from '../models/User';
+import Job from '../models/Job';
 
 // Créer un nouveau chat
-exports.createChat = async (req, res) => {
+export async function createChat(req, res) {
   const { employerId, freelancerId, jobId } = req.body;
 
   try {
@@ -28,10 +28,10 @@ exports.createChat = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}
 
 // Obtenir tous les chats d'un utilisateur
-exports.getChats = async (req, res) => {
+export async function getChats(req, res) {
   try {
     const chats = await Chat.find({
       $or: [
@@ -45,10 +45,10 @@ exports.getChats = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}
 
 // Envoyer un message dans un chat
-exports.sendMessage = async (req, res) => {
+export async function sendMessage(req, res) {
   const { chatId, text } = req.body;
 
   try {
@@ -69,4 +69,4 @@ exports.sendMessage = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}

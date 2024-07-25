@@ -1,16 +1,16 @@
-const nodemailer = require('nodemailer');
-const config = require('config');
+import { createTransport } from 'nodemailer';
+import { get } from 'config';
 
 
-const transporter = nodemailer.createTransport({
+const transporter = createTransport({
     service: 'Gmail',
     auth: {
-        user: config.get('emailUser'),
-        pass: config.get('emailPass'),
+        user: get('emailUser'),
+        pass: get('emailPass'),
     }
 });
 
-exports.sendContactMessage = async (req, res) => {
+export async function sendContactMessage(req, res) {
     const { name, email, message } = req.body;
 
     
@@ -22,7 +22,7 @@ exports.sendContactMessage = async (req, res) => {
     
         const mailOptions = {
             from: email,
-            to: config.get('contactEmail'),
+            to: get('contactEmail'),
             subject: `Message de contact de ${name}`,
             text: message,
             html: `<p>Vous avez reçu un nouveau message de contact de <b>${name}</b> (<a href="mailto:${email}">${email}</a>).</p>
@@ -37,4 +37,4 @@ exports.sendContactMessage = async (req, res) => {
         console.error('Erreur lors de l\'envoi de l\'email:', error.message);
         res.status(500).send('Erreur serveur');
     }
-};
+}

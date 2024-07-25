@@ -1,6 +1,6 @@
 {
-    "mongoURI": "MONGO_URI",
-    "port": "PORT",
+    "mongoURI": "mongodb+srv://gladius33_dev-houb:OXjtYxSD6xTmAKjT@dev.xjhlhjn.mongodb.net/?retryWrites=true&w=majority&appName=dev",
+    "port": "5000",
     "jwtSecret": "JWT_SECRET"
   }
   

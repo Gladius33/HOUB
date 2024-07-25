@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import PaymentInfoForm from './PaymentInfoForm';
+import ProfileForm from './ProfileForm';
+import JobList from '../Jobs/JobList';
+import Notifications from './Notifications';
 
 const FreelancerDashboard = () => {
   const { t } = useTranslation();
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    // Fetch jobs related to the freelancer
+    // setJobs(fetchedJobs);
+  }, []);
 
   return (
     <div>
-      <h1>{t('freelancerDashboard')}</h1>
+      <h1>{t('Freelancer Dashboard')}</h1>
+      <ProfileForm />
+      <PaymentInfoForm />
+      <JobList jobs={jobs} />
+      <Notifications />
     </div>
   );
 };
 
 export default FreelancerDashboard;
+

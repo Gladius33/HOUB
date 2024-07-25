@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const GigSchema = new mongoose.Schema({
+const GigSchema = new Schema({
   employer: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'employer'
   },
   title: {
@@ -43,4 +43,4 @@ const GigSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('gig', GigSchema);
+export default model('gig', GigSchema);

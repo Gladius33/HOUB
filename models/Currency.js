@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose, { Model } from 'mongoose';
 const { Schema, model } = mongoose;
 
 
@@ -15,7 +15,7 @@ const Currency = new Schema({
   // Add more currencies as needed
 }, { timestamps: true });
 
-    return mongoose.Model
+    return Model
 
-module.exports = Currency();
+export default Currency();
 

@@ -1,0 +1,15 @@
+.home-container {
+    text-align: center;
+    color: white;
+    background-color: #800080;
+    padding: 50px;
+  }
+  
+  .cta-button {
+    background-color: #6a006a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  

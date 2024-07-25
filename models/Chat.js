@@ -1,21 +1,21 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const ChatSchema = new mongoose.Schema({
+const ChatSchema = new Schema({
   employer: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User'
   },
   freelancer: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User'
   },
   job: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Job'
   },
   messages: [{
     sender: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User'
     },
     text: {
@@ -33,4 +33,4 @@ const ChatSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Chat', ChatSchema);
+export default model('Chat', ChatSchema);

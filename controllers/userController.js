@@ -1,8 +1,8 @@
-const User = require('../models/User');
-const { validationResult } = require('express-validator');
+import User from '../models/User';
+import { validationResult } from 'express-validator';
 
 // Get all users
-exports.getUsers = async (req, res) => {
+export async function getUsers(req, res) {
   try {
     const users = await User.find().select('-password');
     res.json(users);
@@ -10,10 +10,10 @@ exports.getUsers = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
-};
+}
 
 // Get user by ID
-exports.getUserById = async (req, res) => {
+export async function getUserById(req, res) {
   try {
     const user = await User.findById(req.params.userId).select('-password');
 
@@ -27,10 +27,10 @@ exports.getUserById = async (req, res) => {
     }
     res.status(500).send('Server error');
   }
-};
+}
 
 // Create or update user profile
-exports.upsertUser = async (req, res) => {
+export async function upsertUser(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -75,10 +75,10 @@ exports.upsertUser = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
-};
+}
 
 // Delete user
-exports.deleteUser = async (req, res) => {
+export async function deleteUser(req, res) {
   try {
     await User.findByIdAndRemove(req.params.userId);
     res.json({ msg: 'User removed' });
@@ -89,4 +89,4 @@ exports.deleteUser = async (req, res) => {
     }
     res.status(500).send('Server error');
   }
-};
+}

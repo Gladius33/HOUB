@@ -1,9 +1,9 @@
-const Freelance = require('../models/Freelance');
-const User = require('../models/User');
-const { validationResult } = require('express-validator');
+import Freelance from '../models/Freelance';
+import User from '../models/User';
+import { validationResult } from 'express-validator';
 
 // Get all freelances
-exports.getFreelances = async (req, res) => {
+export async function getFreelances(req, res) {
   try {
     const freelances = await Freelance.find().populate('user', ['name', 'avatar']);
     res.json(freelances);
@@ -11,10 +11,10 @@ exports.getFreelances = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
-};
+}
 
 // Get freelance by user ID
-exports.getFreelanceById = async (req, res) => {
+export async function getFreelanceById(req, res) {
   try {
     const freelance = await Freelance.findOne({ user: req.params.userId }).populate('user', ['name', 'avatar']);
 
@@ -28,10 +28,10 @@ exports.getFreelanceById = async (req, res) => {
     }
     res.status(500).send('Server error');
   }
-};
+}
 
 // Create or update freelance profile
-exports.upsertFreelance = async (req, res) => {
+export async function upsertFreelance(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -94,4 +94,4 @@ exports.upsertFreelance = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
-};
+}

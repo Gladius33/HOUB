@@ -1,8 +1,8 @@
-const Gig = require('../models/Gig');
-const { validationResult } = require('express-validator');
+import Gig from '../models/Gig';
+import { validationResult } from 'express-validator';
 
 // Get all gigs
-exports.getGigs = async (req, res) => {
+export async function getGigs(req, res) {
   try {
     const gigs = await Gig.find().populate('employer', ['companyName', 'logo']);
     res.json(gigs);
@@ -10,10 +10,10 @@ exports.getGigs = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
-};
+}
 
 // Get gig by ID
-exports.getGigById = async (req, res) => {
+export async function getGigById(req, res) {
   try {
     const gig = await Gig.findById(req.params.gigId).populate('employer', ['companyName', 'logo']);
 
@@ -27,10 +27,10 @@ exports.getGigById = async (req, res) => {
     }
     res.status(500).send('Server error');
   }
-};
+}
 
 // Create or update gig
-exports.upsertGig = async (req, res) => {
+export async function upsertGig(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -82,10 +82,10 @@ exports.upsertGig = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
-};
+}
 
 // Delete gig
-exports.deleteGig = async (req, res) => {
+export async function deleteGig(req, res) {
   try {
     await Gig.findByIdAndRemove(req.params.gigId);
 
@@ -97,4 +97,4 @@ exports.deleteGig = async (req, res) => {
     }
     res.status(500).send('Server error');
   }
-};
+}

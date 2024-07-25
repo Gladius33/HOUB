@@ -1,7 +1,7 @@
-const Currency = require('../models/Currency');
-const axios = require('axios');
+import Currency from '../models/Currency';
+import { get } from 'axios';
 
-exports.getCurrencies = async (req, res) => {
+export async function getCurrencies(req, res) {
   try {
     const currencies = await Currency.find();
     res.json(currencies);
@@ -9,13 +9,13 @@ exports.getCurrencies = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Erreur du serveur');
   }
-};
+}
 
-exports.createCurrency = async (req, res) => {
+export async function createCurrency(req, res) {
   const { code, name } = req.body;
 
   try {
-    const response = await axios.get('https://cdn.taux.live/api/ecb.json');
+    const response = await get('https://cdn.taux.live/api/ecb.json');
     const rate = response.data[code.toUpperCase()];
 
     if (!rate) {
@@ -29,13 +29,13 @@ exports.createCurrency = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Erreur du serveur');
   }
-};
+}
 
-exports.updateCurrencyRates = async (req, res) => {
+export async function updateCurrencyRates(req, res) {
   try {
     const currencies = await Currency.find();
     for (let currency of currencies) {
-      const response = await axios.get('https://cdn.taux.live/api/ecb.json');
+      const response = await get('https://cdn.taux.live/api/ecb.json');
       currency.rate = response.data[currency.code.toUpperCase()] || currency.rate;
       await currency.save();
     }
@@ -44,5 +44,5 @@ exports.updateCurrencyRates = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Erreur du serveur');
   }
-};
+}
 

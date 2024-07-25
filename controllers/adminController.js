@@ -1,12 +1,12 @@
-const axios = require('axios');
+import { get } from 'axios';
 console.log('Loading Currency model...');
-const Currency = require('../models/Currency');
+import Currency from '../models/Currency';
 console.log('Currency model loaded:', Currency);
 
-exports.updateCurrencyRates = async (req, res) => {
+export async function updateCurrencyRates(req, res) {
   try {
     console.log('Fetching currency rates...');
-    const response = await axios.get('https://cdn.taux.live/api/ecb.json');
+    const response = await get('https://cdn.taux.live/api/ecb.json');
     console.log('Rates fetched:', response.data);
     const rates = response.data;
 
@@ -36,4 +36,4 @@ exports.updateCurrencyRates = async (req, res) => {
     console.error('Error fetching or updating currency rates:', err.message);
     res.status(500).send('Erreur du serveur');
   }
-};
+}

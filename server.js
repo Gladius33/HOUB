@@ -1,35 +1,51 @@
-const express = require('express');
-const connectDB = require('./config/db');
-const config = require('config')
-const path = require('path');
+import express from 'express';
+import json from 'express';
+import serveStatic from 'serve-static';
+import connectDB from './config/db.js';
+import config from 'config';
+import { resolve } from 'path';
 
+const { get } = config;
 const app = express();
 connectDB();
 
-app.use(express.json({ extended: false }));
+app.use(json({ extended: false }));
 
-app.use('/index', require('./routes/index'));
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/gigs', require('./routes/api/gigs'));
-app.use('/api/jobs', require('./routes/api/jobs'));
-app.use('/api/categories', require('./routes/api/categories'));
-app.use('/api/contact', require('./routes/api/contact'));
-app.use('/api/currencies', require('./routes/api/currencies'));
-app.use('/api/translations', require('./routes/api/translation'));
-app.use('/api/chats', require('./routes/api/chats'));
-app.use('/api/admin', require('./routes/api/admin'));
-app.use('/api/employers', require('./routes/api/employers'));
-app.use('/api/freelances', require('./routes/api/freelances'));
+import indexRoutes from './routes/index.js';
+import userRoutes from './routes/api/users.js';
+import authRoutes from './routes/api/auth.js';
+import gigRoutes from './routes/api/gigs.js';
+import jobRoutes from './routes/api/jobs.js';
+import categoryRoutes from './routes/api/categories.js';
+import contactRoutes from './routes/api/contact.js';
+import currencyRoutes from './routes/api/currencies.js';
+import translationRoutes from './routes/api/translation.js';
+import chatRoutes from './routes/api/chats.js';
+import adminRoutes from './routes/api/admin.js';
+import employerRoutes from './routes/api/employers.js';
+import freelanceRoutes from './routes/api/freelances.js';
 
+app.use('/index', indexRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/gigs', gigRoutes);
+app.use('/api/jobs', jobRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/currencies', currencyRoutes);
+app.use('/api/translations', translationRoutes);
+app.use('/api/chats', chatRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/employers', employerRoutes);
+app.use('/api/freelances', freelanceRoutes);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(serveStatic('client/build'));
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(resolve('client', 'build', 'index.html'));
   });
 }
 
-const PORT = config.get('port') || 5000;
+const PORT = get('port') || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

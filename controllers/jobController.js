@@ -1,7 +1,7 @@
-const Job = require('../models/Job');
-const User = require('../models/User');
+import Job from '../models/Job';
+import User from '../models/User';
 
-exports.createJob = async (req, res) => {
+export async function createJob(req, res) {
   const {
     title,
     description,
@@ -48,9 +48,9 @@ exports.createJob = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}
 
-exports.getJobs = async (req, res) => {
+export async function getJobs(req, res) {
   try {
     const jobs = await Job.find().sort({ date: -1 });
     res.json(jobs);
@@ -58,9 +58,9 @@ exports.getJobs = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}
 
-exports.getJob = async (req, res) => {
+export async function getJob(req, res) {
   try {
     const job = await Job.findById(req.params.id);
     if (!job) return res.status(404).json({ msg: 'Job not found' });
@@ -69,4 +69,4 @@ exports.getJob = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}

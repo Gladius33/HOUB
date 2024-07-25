@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const TranslationSchema = new mongoose.Schema({
+const TranslationSchema = new Schema({
   language: {
     type: String,
     required: true,
@@ -12,4 +12,4 @@ const TranslationSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Translation', TranslationSchema);
+export default model('Translation', TranslationSchema);

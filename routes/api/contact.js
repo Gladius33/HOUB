@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.post('/', sendContactMessage);
 
-module.exports = router;
+export default router;

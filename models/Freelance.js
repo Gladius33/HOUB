@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const FreelanceSchema = new mongoose.Schema({
+const FreelanceSchema = new Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'user'
   },
   shortDescription: {
@@ -46,4 +46,4 @@ const FreelanceSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('freelance', FreelanceSchema);
+export default model('freelance', FreelanceSchema);

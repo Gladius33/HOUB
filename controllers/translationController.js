@@ -1,19 +1,19 @@
-const Translation = require('../models/Translation');
-const multer = require('multer');
-const path = require('path');
+import Translation from '../models/Translation';
+import multer, { diskStorage } from 'multer';
+import { extname } from 'path';
 
-const storage = multer.diskStorage({
+const storage = diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/translations/');
   },
   filename: (req, file, cb) => {
-    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+    cb(null, `${file.fieldname}-${Date.now()}${extname(file.originalname)}`);
   },
 });
 
 const upload = multer({ storage }).single('file');
 
-exports.uploadTranslation = (req, res) => {
+export function uploadTranslation(req, res) {
   upload(req, res, async (err) => {
     if (err) {
       return res.status(500).send(err);
@@ -31,9 +31,9 @@ exports.uploadTranslation = (req, res) => {
       res.status(500).send('Server Error');
     }
   });
-};
+}
 
-exports.getTranslations = async (req, res) => {
+export async function getTranslations(req, res) {
   try {
     const translations = await Translation.find();
     res.json(translations);
@@ -41,4 +41,4 @@ exports.getTranslations = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};
+}

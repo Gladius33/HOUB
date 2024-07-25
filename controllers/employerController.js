@@ -1,9 +1,9 @@
-const Employer = require('../models/Employer');
-const User = require('../models/User');
-const { validationResult } = require('express-validator');
+import Employer from '../models/Employer';
+import User from '../models/User';
+import { validationResult } from 'express-validator';
 
 // Get all employers
-exports.getEmployers = async (req, res) => {
+export async function getEmployers(req, res) {
   try {
     const employers = await Employer.find().populate('user', ['name', 'avatar']);
     res.json(employers);
@@ -11,10 +11,10 @@ exports.getEmployers = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
-};
+}
 
 // Get employer by user ID
-exports.getEmployerById = async (req, res) => {
+export async function getEmployerById(req, res) {
   try {
     const employer = await Employer.findOne({ user: req.params.userId }).populate('user', ['name', 'avatar']);
 
@@ -28,10 +28,10 @@ exports.getEmployerById = async (req, res) => {
     }
     res.status(500).send('Server error');
   }
-};
+}
 
 // Create or update employer profile
-exports.upsertEmployer = async (req, res) => {
+export async function upsertEmployer(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -79,4 +79,4 @@ exports.upsertEmployer = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
-};
+}
