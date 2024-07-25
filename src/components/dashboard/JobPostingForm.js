@@ -1,42 +1,73 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 const JobPostingForm = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [maxRate, setMaxRate] = useState('');
-  const [duration, setDuration] = useState('');
-  const [workType, setWorkType] = useState('');
-  const [location, setLocation] = useState('');
+  const { t } = useTranslation();
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    category: '',
+    maxDailyRate: '',
+    missionDuration: '',
+    remote: false,
+    location: '',
+    workHours: '',
+    companyName: '',
+    companyAvatar: '',
+    shortDescription: '',
+    sector: '',
+    country: '',
+  });
 
-  const handleSubmit = (e) => {
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    // Envoie les informations de l'offre d'emploi au backend
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const body = JSON.stringify(formData);
+      await axios.post('/api/jobs', body, config);
+      navigate('/dashboard/employer');
+    } catch (err) {
+      console.error(err.response.data);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Create Job Posting</h2>
-      <label>Title:</label>
-      <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <label>Description:</label>
-      <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-      <label>Category:</label>
-      <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
-      <label>Maximum Rate:</label>
-      <input type="number" value={maxRate} onChange={(e) => setMaxRate(e.target.value)} />
-      <label>Duration (days):</label>
-      <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} />
-      <label>Work Type:</label>
-      <select value={workType} onChange={(e) => setWorkType(e.target.value)}>
-        <option value="remote">Remote</option>
-        <option value="on-site">On-Site</option>
-      </select>
-      <label>Location (if on-site):</label>
-      <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
-      <button type="submit">Post Job</button>
+    <form onSubmit={onSubmit}>
+      <label>{t('Job Title')}</label>
+      <input type="text" name="title" value={formData.title} onChange={onChange} />
+      <label>{t('Description')}</label>
+      <textarea name="description" value={formData.description} onChange={onChange} />
+      <label>{t('Category')}</label>
+      <input type="text" name="category" value={formData.category} onChange={onChange} />
+      <label>{t('Max Daily Rate')}</label>
+      <input type="number" name="maxDailyRate" value={formData.maxDailyRate} onChange={onChange} />
+      <label>{t('Mission Duration (days)')}</label>
+      <input type="number" name="missionDuration" value={formData.missionDuration} onChange={onChange} />
+      <label>{t('Remote Work')}</label>
+      <input type="checkbox" name="remote" checked={formData.remote} onChange={(e) => setFormData({ ...formData, remote: e.target.checked })} />
+      <label>{t('Location')}</label>
+      <input type="text" name="location" value={formData.location} onChange={onChange} />
+      <label>{t('Company Name')}</label>
+      <input type="text" name="companyName" value={formData.companyName} onChange={onChange} />
+      <label>{t('Company Avatar URL')}</label>
+      <input type="text" name="companyAvatar" value={formData.companyAvatar} onChange={onChange} />
+      <label>{t('Short Description')}</label>
+      <textarea name="shortDescription" value={formData.shortDescription} onChange={onChange} />
+      <label>{t('Sector')}</label>
+      <input type="text" name="sector" value={formData.sector} onChange={onChange} />
+      <label>{t('Country')}</label>
+      <input type="text" name="country" value={formData.country} onChange={onChange} />
+      <button type="submit">{t('Post Job')}</button>
     </form>
   );
 };
 
 export default JobPostingForm;
+
