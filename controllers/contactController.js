@@ -1,12 +1,12 @@
 import { createTransport } from 'nodemailer';
-import { get } from 'config';
+import config from 'config';
 
 
 const transporter = createTransport({
     service: 'Gmail',
     auth: {
-        user: get('emailUser'),
-        pass: get('emailPass'),
+        user: config.get('emailUser'),
+        pass: config.get('emailPass'),
     }
 });
 
@@ -38,3 +38,5 @@ export async function sendContactMessage(req, res) {
         res.status(500).send('Erreur serveur');
     }
 }
+
+export default sendContactMessage;

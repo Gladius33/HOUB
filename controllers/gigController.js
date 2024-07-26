@@ -1,7 +1,7 @@
-import Gig from '../models/Gig';
+import Gig from '../models/Gig.js';
 import { validationResult } from 'express-validator';
 
-// Get all gigs
+
 export async function getGigs(req, res) {
   try {
     const gigs = await Gig.find().populate('employer', ['companyName', 'logo']);
@@ -12,7 +12,7 @@ export async function getGigs(req, res) {
   }
 }
 
-// Get gig by ID
+
 export async function getGigById(req, res) {
   try {
     const gig = await Gig.findById(req.params.gigId).populate('employer', ['companyName', 'logo']);
@@ -29,7 +29,7 @@ export async function getGigById(req, res) {
   }
 }
 
-// Create or update gig
+
 export async function upsertGig(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -47,7 +47,7 @@ export async function upsertGig(req, res) {
     status
   } = req.body;
 
-  // Build gig object
+  
   const gigFields = {};
   gigFields.employer = req.user.id;
   if (title) gigFields.title = title;
@@ -63,7 +63,7 @@ export async function upsertGig(req, res) {
     let gig = await Gig.findById(req.params.gigId);
 
     if (gig) {
-      // Update
+      
       gig = await Gig.findOneAndUpdate(
         { _id: req.params.gigId },
         { $set: gigFields },
@@ -73,7 +73,7 @@ export async function upsertGig(req, res) {
       return res.json(gig);
     }
 
-    // Create
+   
     gig = new Gig(gigFields);
 
     await gig.save();
@@ -84,7 +84,7 @@ export async function upsertGig(req, res) {
   }
 }
 
-// Delete gig
+
 export async function deleteGig(req, res) {
   try {
     await Gig.findByIdAndRemove(req.params.gigId);
@@ -98,3 +98,10 @@ export async function deleteGig(req, res) {
     res.status(500).send('Server error');
   }
 }
+
+export default {
+  getGigs,
+  getGigById,
+  upsertGig,
+  deleteGig
+};

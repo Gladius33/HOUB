@@ -1,4 +1,4 @@
-import Category from '../models/Category';
+import Category from '../models/Category.js';
 
 export async function getCategories(req, res) {
   try {
@@ -85,3 +85,12 @@ export async function initializeCategories(req, res) {
     res.status(500).send('Server Error');
   }
 }
+
+export default {
+  getCategories,
+  createCategory,
+  editCategory,
+  deleteCategory,
+  initializeCategories
+
+};

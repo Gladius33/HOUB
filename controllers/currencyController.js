@@ -1,5 +1,5 @@
-import Currency from '../models/Currency';
-import { get } from 'axios';
+import axios from 'axios';
+import Currency from '../models/Currency.js';
 
 export async function getCurrencies(req, res) {
   try {
@@ -15,7 +15,7 @@ export async function createCurrency(req, res) {
   const { code, name } = req.body;
 
   try {
-    const response = await get('https://cdn.taux.live/api/ecb.json');
+    const response = await axios.get('https://cdn.taux.live/api/ecb.json'); // Utilisation de axios.get
     const rate = response.data[code.toUpperCase()];
 
     if (!rate) {
@@ -35,7 +35,7 @@ export async function updateCurrencyRates(req, res) {
   try {
     const currencies = await Currency.find();
     for (let currency of currencies) {
-      const response = await get('https://cdn.taux.live/api/ecb.json');
+      const response = await axios.get('https://cdn.taux.live/api/ecb.json'); // Utilisation de axios.get
       currency.rate = response.data[currency.code.toUpperCase()] || currency.rate;
       await currency.save();
     }
@@ -46,3 +46,8 @@ export async function updateCurrencyRates(req, res) {
   }
 }
 
+export default {
+  getCurrencies,
+  createCurrency,
+  updateCurrencyRates
+};

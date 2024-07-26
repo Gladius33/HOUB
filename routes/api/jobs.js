@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { createJob, getJobs, getJob } = require('../../controllers/jobController');
-const auth = require('../../middleware/auth').default;
+import { createJob, getJobs, getJob } from '../../controllers/jobController.js';
+import auth from '../../middleware/auth.js';
 
 router.post('/', auth, createJob);
 router.get('/', getJobs);

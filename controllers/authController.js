@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import User from '../models/User.js';
 
 export async function register(req, res) {
   // registration logic
@@ -74,3 +74,10 @@ export async function updateProfile(req, res) {
     res.status(500).send('Server Error');
   }
 }
+
+export default {
+  register,
+  login,
+  getProfile,
+  updateProfile
+};

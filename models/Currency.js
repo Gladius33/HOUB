@@ -1,8 +1,7 @@
-import mongoose, { Model } from 'mongoose';
-const { Schema, model } = mongoose;
+import pkg from 'mongoose';
+const { Schema, model } = pkg;
 
-
-const Currency = new Schema({
+const currencySchema = new Schema({
   USD: {
     type: Number
   },
@@ -12,10 +11,11 @@ const Currency = new Schema({
   GBP: {
     type: Number
   },
-  // Add more currencies as needed
+ 
 }, { timestamps: true });
 
-    return Model
+const Currency = model('Currency', currencySchema);
 
-export default Currency();
+export default Currency;
+
 

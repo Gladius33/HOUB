@@ -1,7 +1,7 @@
-const express = require('express');
-const { getCategories, createCategory } = require('../../controllers/categoryController');
-const auth = require('../../middleware/auth').default;
-const adminAuth = require('../../middleware/adminAuth').default;
+import express from 'express';
+import { getCategories, createCategory } from '../../controllers/categoryController.js';
+import auth from '../../middleware/auth.js';
+import adminAuth from '../../middleware/adminAuth.js';
 
 const router = express.Router();
 

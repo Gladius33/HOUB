@@ -1,5 +1,5 @@
-import Job from '../models/Job';
-import User from '../models/User';
+import Job from '../models/Job.js';
+import User from '../models/User.js';
 
 export async function createJob(req, res) {
   const {
@@ -70,3 +70,9 @@ export async function getJob(req, res) {
     res.status(500).send('Server Error');
   }
 }
+
+export default {
+  createJob,
+  getJobs,
+  getJob
+};

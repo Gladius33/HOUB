@@ -1,4 +1,4 @@
-import Translation from '../models/Translation';
+import Translation from '../models/Translation.js';
 import multer, { diskStorage } from 'multer';
 import { extname } from 'path';
 
@@ -42,3 +42,8 @@ export async function getTranslations(req, res) {
     res.status(500).send('Server Error');
   }
 }
+
+export default {
+  uploadTranslation,
+  getTranslations
+};

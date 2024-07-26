@@ -1,13 +1,11 @@
-import Chat from '../models/Chat';
-import User from '../models/User';
-import Job from '../models/Job';
+import Chat from '../models/Chat.js';
+import User from '../models/User.js';
+import Job from '../models/Job.js';
 
-// Créer un nouveau chat
 export async function createChat(req, res) {
   const { employerId, freelancerId, jobId } = req.body;
 
   try {
-    // Vérifier que les utilisateurs et le job existent
     const employer = await User.findById(employerId);
     const freelancer = await User.findById(freelancerId);
     const job = await Job.findById(jobId);
@@ -30,7 +28,6 @@ export async function createChat(req, res) {
   }
 }
 
-// Obtenir tous les chats d'un utilisateur
 export async function getChats(req, res) {
   try {
     const chats = await Chat.find({
@@ -47,7 +44,6 @@ export async function getChats(req, res) {
   }
 }
 
-// Envoyer un message dans un chat
 export async function sendMessage(req, res) {
   const { chatId, text } = req.body;
 
@@ -70,3 +66,9 @@ export async function sendMessage(req, res) {
     res.status(500).send('Server Error');
   }
 }
+
+export default {
+  createChat,
+  getChats,
+  sendMessage
+};

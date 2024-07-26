@@ -1,7 +1,7 @@
-import User from '../models/User';
+import User from '../models/User.js';
 import { validationResult } from 'express-validator';
 
-// Get all users
+
 export async function getUsers(req, res) {
   try {
     const users = await User.find().select('-password');
@@ -12,7 +12,7 @@ export async function getUsers(req, res) {
   }
 }
 
-// Get user by ID
+
 export async function getUserById(req, res) {
   try {
     const user = await User.findById(req.params.userId).select('-password');
@@ -29,7 +29,7 @@ export async function getUserById(req, res) {
   }
 }
 
-// Create or update user profile
+
 export async function upsertUser(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -44,7 +44,7 @@ export async function upsertUser(req, res) {
     avatar
   } = req.body;
 
-  // Build user object
+  
   const userFields = {};
   if (name) userFields.name = name;
   if (email) userFields.email = email;
@@ -56,7 +56,7 @@ export async function upsertUser(req, res) {
     let user = await User.findById(req.params.userId);
 
     if (user) {
-      // Update
+     
       user = await User.findByIdAndUpdate(
         { _id: req.params.userId },
         { $set: userFields },
@@ -66,7 +66,7 @@ export async function upsertUser(req, res) {
       return res.json(user);
     }
 
-    // Create
+    
     user = new User(userFields);
 
     await user.save();
@@ -77,7 +77,7 @@ export async function upsertUser(req, res) {
   }
 }
 
-// Delete user
+
 export async function deleteUser(req, res) {
   try {
     await User.findByIdAndRemove(req.params.userId);
@@ -90,3 +90,11 @@ export async function deleteUser(req, res) {
     res.status(500).send('Server error');
   }
 }
+
+export default {
+  getUsers,
+  getUserById,
+  upsertUser,
+  deleteUser
+
+};

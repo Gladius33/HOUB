@@ -1,7 +1,7 @@
-const express = require('express');
-const { check } = require('express-validator');
-const freelanceController = require('../../controllers/freelanceController');
-const authMiddleware = require('../../middleware/authMiddleware').default;
+import express from 'express';
+import{ check } from 'express-validator';
+import freelanceController from '../../controllers/freelanceController.js';
+import authMiddleware from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
 

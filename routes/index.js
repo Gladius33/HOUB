@@ -1,5 +1,5 @@
 import express from 'express';
-import homeController from '../controllers/homeController.js'; // Assurez-vous que l'extension .js est incluse
+import getHomePage from '../controllers/homeController.js';
 import adminRoutes from './api/admin.js';
 import authRoutes from './api/auth.js';
 import categoryRoutes from './api/categories.js';
@@ -15,7 +15,7 @@ import userRoutes from './api/users.js';
 
 const router = express.Router();
 
-router.get('/', homeController.getHomePage);
+router.get('/', getHomePage);
 router.use('/api/admin', adminRoutes);
 router.use('/api/auth', authRoutes);
 router.use('/api/categories', categoryRoutes);

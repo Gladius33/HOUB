@@ -1,8 +1,8 @@
-import Freelance from '../models/Freelance';
-import User from '../models/User';
+import Freelance from '../models/Freelance.js';
+import User from '../models/User.js';
 import { validationResult } from 'express-validator';
 
-// Get all freelances
+
 export async function getFreelances(req, res) {
   try {
     const freelances = await Freelance.find().populate('user', ['name', 'avatar']);
@@ -13,7 +13,7 @@ export async function getFreelances(req, res) {
   }
 }
 
-// Get freelance by user ID
+
 export async function getFreelanceById(req, res) {
   try {
     const freelance = await Freelance.findOne({ user: req.params.userId }).populate('user', ['name', 'avatar']);
@@ -30,7 +30,7 @@ export async function getFreelanceById(req, res) {
   }
 }
 
-// Create or update freelance profile
+
 export async function upsertFreelance(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -50,7 +50,7 @@ export async function upsertFreelance(req, res) {
     paymentInfo
   } = req.body;
 
-  // Build freelance object
+  
   const freelanceFields = {};
   freelanceFields.user = req.user.id;
   if (shortDescription) freelanceFields.shortDescription = shortDescription;
@@ -75,7 +75,7 @@ export async function upsertFreelance(req, res) {
     let freelance = await Freelance.findOne({ user: req.user.id });
 
     if (freelance) {
-      // Update
+      
       freelance = await Freelance.findOneAndUpdate(
         { user: req.user.id },
         { $set: freelanceFields },
@@ -85,7 +85,7 @@ export async function upsertFreelance(req, res) {
       return res.json(freelance);
     }
 
-    // Create
+    
     freelance = new Freelance(freelanceFields);
 
     await freelance.save();
@@ -95,3 +95,9 @@ export async function upsertFreelance(req, res) {
     res.status(500).send('Server error');
   }
 }
+
+export default {
+  getFreelances,
+  getFreelanceById,
+  upsertFreelance
+};

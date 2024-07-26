@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { createChat, getChats, sendMessage } = require('../../controllers/chatController');
-const auth = require('../../middleware/auth').default;
+import { createChat, getChats, sendMessage } from '../../controllers/chatController.js';
+import auth from '../../middleware/auth.js';
 
 router.post('/', auth, createChat);
 router.get('/', auth, getChats);
