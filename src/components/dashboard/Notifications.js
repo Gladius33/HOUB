@@ -4,7 +4,14 @@ const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    
+    // Fetch notifications from the backend or some API
+    const fetchNotifications = async () => {
+      const response = await fetch('/api/notifications');
+      const data = await response.json();
+      setNotifications(data);
+    };
+
+    fetchNotifications();
   }, []);
 
   return (
@@ -20,3 +27,4 @@ const Notifications = () => {
 };
 
 export default Notifications;
+

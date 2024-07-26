@@ -5,7 +5,6 @@ const JobList = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    // Fonction pour récupérer les offres d'emploi depuis le backend
     const fetchJobs = async () => {
       try {
         const response = await fetch('/api/jobs');
@@ -41,3 +40,4 @@ const JobList = () => {
 };
 
 export default JobList;
+

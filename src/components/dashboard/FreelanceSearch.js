@@ -9,7 +9,7 @@ const FreelanceSearch = () => {
   const [location, setLocation] = useState('');
 
   const handleSearch = () => {
-    
+    // Logic for searching freelancers based on the criteria
   };
 
   return (
@@ -28,11 +28,16 @@ const FreelanceSearch = () => {
         <option value="remote">Remote</option>
         <option value="on-site">On-Site</option>
       </select>
-      <label>Location (if on-site):</label>
-      <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
+      {workType === 'on-site' && (
+        <div>
+          <label>Location (if on-site):</label>
+          <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
+        </div>
+      )}
       <button onClick={handleSearch}>Search</button>
     </div>
   );
 };
 
 export default FreelanceSearch;
+
