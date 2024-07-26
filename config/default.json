@@ -1,9 +1,0 @@
-{
-    "mongoURI": "mongoURI",
-    "port": 5000,
-    "jwtSecret": "yourSecretKey",
-    "emailUser": "your-email@gmail.com",
-    "emailPass": "your-email-password",
-    "contactEmail": "contact-receiver@example.com"
-  }
-  

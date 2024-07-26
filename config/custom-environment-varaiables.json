@@ -1,6 +1,0 @@
-{
-    "mongoURI": "mongoURI",
-    "port": "5000",
-    "jwtSecret": "JWT_SECRET"
-  }
-  
