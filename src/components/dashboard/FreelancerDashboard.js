@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import PaymentInfoForm from './PaymentInfoForm';
-import ProfileForm from './ProfileForm';
-import JobList from '../Jobs/JobList';
-import Notifications from './Notifications';
+import PaymentInfoForm from './PaymentInfoForm.js';
+import ProfileForm from './ProfileForm.js';
+import JobList from '../jobs/JobList.js';
+import Notifications from './Notifications.js';
 
 const FreelancerDashboard = () => {
   const { t } = useTranslation();

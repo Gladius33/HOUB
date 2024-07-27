@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateProfile } from '../../actions/freelanceActions';
+import { updateProfile } from '../../actions/freelanceActions.js';
 
 const ProfileForm = () => {
   const [profile, setProfile] = useState({
@@ -18,7 +18,7 @@ const ProfileForm = () => {
     onSite: false,
     geographicZone: '',
     categories: [],
-    location: '' // Pour les missions sur site
+    location: ''
   });
 
   const dispatch = useDispatch();

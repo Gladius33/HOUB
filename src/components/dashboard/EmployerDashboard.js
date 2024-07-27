@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import JobPostingForm from './JobPostingForm';
-import FreelanceSearch from './FreelanceSearch';
-import JobList from '../Jobs/JobList';
-import Notifications from './Notifications';
+import JobPostingForm from './JobPostingForm.js';
+import FreelanceSearch from './FreelanceSearch.js';
+import JobList from '../jobs/JobList.js';
+import Notifications from './Notifications.js';
 
 const EmployerDashboard = () => {
   const { t } = useTranslation();

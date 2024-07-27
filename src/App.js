@@ -1,20 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Navbar from './components/layout/Navbar';
-import Home from './components/pages/Home';
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
-import Dashboard from './components/dashboard/Dashboard';
-import EmployerDashboard from './components/dashboard/EmployerDashboard';
-import FreelancerDashboard from './components/dashboard/FreelancerDashboard';
-import CreateJob from './components/jobs/CreateJob';
-import JobList from './components/jobs/JobList';
-import JobDetails from './components/jobs/JobDetails';
-import Chat from './components/chat/Chat';
-import Profile from './components/profile/Profile';
-import PrivateRoute from './components/routing/PrivateRoute';
-import './App.css';
+import Navbar from './components/layout/Navbar.js';
+import Home from './components/pages/Home.js';
+import Register from './components/auth/Register.js';
+import Login from './components/auth/Login.js';
+import Dashboard from './components/dashboard/Dashboard.js';
+import EmployerDashboard from './components/dashboard/EmployerDashboard.js';
+import FreelancerDashboard from './components/dashboard/FreelancerDashboard.js';
+import CreateJob from './components/jobs/CreateJob.js';
+import JobList from './components/jobs/JobList.js';
+import JobDetails from './components/jobs/JobDetails.js';
+import Chat from './components/chat/Chat.js';
+import Profile from './components/profile/Profile.js';
+import PrivateRoute from './components/routing/PrivateRoute.js';
+import './styles/App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {

@@ -6,7 +6,7 @@
     "scripts": {
         "start": "node server.js",
         "server": "nodemon server.js",
-        "client": "npm start --prefix client",
+        "client": "npm start --prefix src",
         "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "dependencies": {
@@ -23,6 +23,7 @@
         "nodemailer": "^6.9.14",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
+        "react-i18next": "^15.0.0",
         "serve-static": "^1.15.0"
     },
     "devDependencies": {

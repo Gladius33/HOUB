@@ -83,8 +83,14 @@ const UserSchema = new Schema({
       type: Date,
       default: Date.now
     }
-  }]
+  }],
+  userType: {  // Ajout du champ userType
+    type: String,
+    enum: ['freelance', 'employer', 'admin'],
+    required: true
+  }
 }, { timestamps: true });
 
 export default model('User', UserSchema);
+
 

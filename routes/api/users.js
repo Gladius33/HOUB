@@ -26,7 +26,7 @@ router.post(
       check('name', 'Name is required').not().isEmpty(),
       check('email', 'Please include a valid email').isEmail(),
       check('password', 'Password is required').optional().isLength({ min: 6 }),
-      check('userType', 'User type is required').not().isEmpty()
+      check('userType', 'User type is required').optional().not().isEmpty()
     ]
   ],
   userController.upsertUser
@@ -36,5 +36,37 @@ router.post(
 // @desc    Delete user
 // @access  Private
 router.delete('/:userId', authMiddleware, userController.deleteUser);
+
+// @route   POST api/users/admin
+// @desc    Create an admin
+// @access  Private
+router.post(
+  '/admin',
+  [
+    authMiddleware,
+    [
+      check('name', 'Name is required').not().isEmpty(),
+      check('email', 'Please include a valid email').isEmail(),
+      check('password', 'Password is required').isLength({ min: 6 })
+    ]
+  ],
+  userController.createAdmin
+);
+
+// @route   PUT api/users/:userId
+// @desc    Update user account
+// @access  Private
+router.put(
+  '/:userId',
+  [
+    authMiddleware,
+    [
+      check('name', 'Name is required').optional().not().isEmpty(),
+      check('email', 'Please include a valid email').optional().isEmail(),
+      check('password', 'Password').optional().isLength({ min: 6 })
+    ]
+  ],
+  userController.updateAccount
+);
 
 export default router;
