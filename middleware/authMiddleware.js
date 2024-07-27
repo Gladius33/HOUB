@@ -10,7 +10,7 @@ export default function (req, res, next) {
   }
 
   try {
-    const decoded = verify(token, config.get('jwtSecret')); // Utilisation de config.get
+    const decoded = verify(token, config.get('jwtSecret'));
     req.user = decoded.user;
     next();
   } catch (err) {

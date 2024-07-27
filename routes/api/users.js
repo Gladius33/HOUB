@@ -1,6 +1,7 @@
 import express from 'express';
 import { check } from 'express-validator';
 import userController from '../../controllers/userController.js';
+import { updatePaymentInfo } from '../../controllers/paymentController.js';
 import authMiddleware from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -68,5 +69,7 @@ router.put(
   ],
   userController.updateAccount
 );
+
+router.put('/payment-info', authMiddleware, updatePaymentInfo);
 
 export default router;

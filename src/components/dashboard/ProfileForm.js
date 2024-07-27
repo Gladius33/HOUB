@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateProfile } from '../../actions/freelanceActions.js';
+import updateAccount from '../../../controllers/userController.js';
 
 const ProfileForm = () => {
   const [profile, setProfile] = useState({
@@ -30,7 +30,7 @@ const ProfileForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProfile(profile));
+    dispatch(updateAccount(profile));
   };
 
   return (

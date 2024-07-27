@@ -23,23 +23,22 @@ const PaymentInfoForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Payment Information</h2>
+      <h2>Informations de Paiement</h2>
       <div>
-        <label>Bank Account:</label>
+        <label>Compte Bancaire:</label>
         <input type="text" name="bankAccount" value={paymentInfo.bankAccount} onChange={handleChange} />
       </div>
       <div>
-        <label>BTC Wallet:</label>
+        <label>Portefeuille BTC:</label>
         <input type="text" name="btcWallet" value={paymentInfo.btcWallet} onChange={handleChange} />
       </div>
       <div>
-        <label>XMR Wallet:</label>
+        <label>Portefeuille XMR:</label>
         <input type="text" name="xmrWallet" value={paymentInfo.xmrWallet} onChange={handleChange} />
       </div>
-      <button type="submit">Save Payment Info</button>
+      <button type="submit">Enregistrer les Informations de Paiement</button>
     </form>
   );
 };
 
 export default PaymentInfoForm;
-
