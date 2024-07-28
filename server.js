@@ -6,10 +6,33 @@ import config from 'config';
 import { resolve } from 'path';
 import authMiddleware from './middleware/authMiddleware.js';
 import adminAuth from './middleware/adminAuth.js';
+import User from './models/User.js';
+import bcrypt from 'bcryptjs'; 
 
-const { get } = config;
 const app = express();
 connectDB();
+
+const createDefaultAdmin = async () => {
+  try {
+    const adminExists = await User.findOne({ userType: 'admin' });
+    if (!adminExists) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash('admin123', salt);
+      const admin = new User({
+        name: 'Admin',
+        email: 'admin@example.com',
+        password: hashedPassword,
+        userType: 'admin'
+      });
+      await admin.save();
+      console.log('Compte administrateur par défaut créé');
+    } else {
+      console.log('Un compte administrateur existe déjà.');
+    }
+  } catch (error) {
+    console.error('Erreur lors de la création de l\'administrateur par défaut:', error.message);
+  }
+};
 
 app.use(json({ extended: false }));
 
@@ -52,4 +75,8 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = config.get('port') || 5000;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+  createDefaultAdmin();
+});
+
