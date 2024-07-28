@@ -1,14 +1,89 @@
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import config from 'config';
 
+const jwtSecret = config.get('jwtSecret');
+
+// Fonction d'inscription
 export async function register(req, res) {
-  // registration logic
+  const { name, email, password, userType } = req.body;
+
+  try {
+    // Vérifier si l'utilisateur existe déjà
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
+    }
+
+    // Créer une nouvelle instance d'utilisateur
+    user = new User({
+      name,
+      email,
+      password,
+      userType
+    });
+
+    // Hacher le mot de passe avant de le sauvegarder
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+
+    await user.save();
+
+    // Générer un token JWT
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
+
+    jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
+      if (err) throw err;
+      res.json({ token });
+    });
+
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 }
 
+// Fonction de connexion
 export async function login(req, res) {
-  // login logic
+  const { email, password } = req.body;
+
+  try {
+    // Vérifier si l'utilisateur existe
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
+    }
+
+    // Vérifier le mot de passe
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
+    }
+
+    // Générer un token JWT
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
+
+    jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
+      if (err) throw err;
+      res.json({ token });
+    });
+
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 }
 
+// Fonction pour obtenir le profil utilisateur
 export async function getProfile(req, res) {
   try {
     const user = await User.findById(req.user.id).select('-password');
@@ -19,6 +94,7 @@ export async function getProfile(req, res) {
   }
 }
 
+// Fonction pour mettre à jour le profil utilisateur
 export async function updateProfile(req, res) {
   const {
     name,

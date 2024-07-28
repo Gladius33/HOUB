@@ -16,21 +16,37 @@ router.get('/', authMiddleware, userController.getUsers);
 // @access  Private
 router.get('/:userId', authMiddleware, userController.getUserById);
 
-// @route   POST api/users/:userId
-// @desc    Create or update user profile
+// @route   POST api/users
+// @desc    Create a new user
 // @access  Private
 router.post(
-  '/:userId',
+  '/',
   [
     authMiddleware,
     [
       check('name', 'Name is required').not().isEmpty(),
       check('email', 'Please include a valid email').isEmail(),
-      check('password', 'Password is required').optional().isLength({ min: 6 }),
-      check('userType', 'User type is required').optional().not().isEmpty()
+      check('password', 'Password is required').isLength({ min: 6 }),
+      check('userType', 'User type is required').not().isEmpty()
     ]
   ],
-  userController.upsertUser
+  userController.createUser
+);
+
+// @route   PUT api/users/:userId
+// @desc    Update user account
+// @access  Private
+router.put(
+  '/:userId',
+  [
+    authMiddleware,
+    [
+      check('name', 'Name is required').optional().not().isEmpty(),
+      check('email', 'Please include a valid email').optional().isEmail(),
+      check('password', 'Password').optional().isLength({ min: 6 })
+    ]
+  ],
+  userController.updateAccount
 );
 
 // @route   DELETE api/users/:userId
@@ -54,22 +70,7 @@ router.post(
   userController.createAdmin
 );
 
-// @route   PUT api/users/:userId
-// @desc    Update user account
-// @access  Private
-router.put(
-  '/:userId',
-  [
-    authMiddleware,
-    [
-      check('name', 'Name is required').optional().not().isEmpty(),
-      check('email', 'Please include a valid email').optional().isEmail(),
-      check('password', 'Password').optional().isLength({ min: 6 })
-    ]
-  ],
-  userController.updateAccount
-);
-
 router.put('/payment-info', authMiddleware, updatePaymentInfo);
 
 export default router;
+

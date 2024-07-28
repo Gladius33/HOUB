@@ -14,8 +14,13 @@ import JobDetails from './components/jobs/JobDetails.js';
 import Chat from './components/chat/Chat.js';
 import Profile from './components/profile/Profile.js';
 import PrivateRoute from './components/routing/PrivateRoute.js';
+import axios from 'axios';
 import './styles/App.css';
 import 'react-toastify/dist/ReactToastify.css';
+
+// Configuration de base d'Axios
+axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 const App = () => {
   return (
@@ -40,4 +45,3 @@ const App = () => {
 };
 
 export default App;
-
