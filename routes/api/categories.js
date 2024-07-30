@@ -8,4 +8,6 @@ const router = express.Router();
 router.get('/', getCategories);
 router.post('/', [auth, adminAuth], createCategory);
 
-export default router;
+const categoryRoutes = router;
+export default categoryRoutes;
+

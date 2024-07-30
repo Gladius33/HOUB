@@ -32,4 +32,6 @@ router.post(
   freelanceController.upsertFreelance
 );
 
-export default router;
+const freelanceRoutes = router;
+export default freelanceRoutes;
+

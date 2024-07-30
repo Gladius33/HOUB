@@ -1,6 +1,8 @@
+
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import updateAccount from '../../../controllers/userController.js';
+import axios from 'axios';
+import { updateProfile } from '../../redux/actions/profileActions.js';
 
 const ProfileForm = () => {
   const [profile, setProfile] = useState({
@@ -12,13 +14,10 @@ const ProfileForm = () => {
     rate: '',
     minDuration: '',
     maxDuration: '',
-    fullTime: false,
-    partTime: false,
-    remote: false,
-    onSite: false,
+    workPreference: 'full-time',
+    location: '',
     geographicZone: '',
-    categories: [],
-    location: ''
+    categories: ''
   });
 
   const dispatch = useDispatch();
@@ -28,9 +27,18 @@ const ProfileForm = () => {
     setProfile({ ...profile, [name]: type === 'checkbox' ? checked : value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(updateAccount(profile));
+
+    try {
+      // Envoi des données du profil au serveur
+      const response = await axios.put('/api/profile', profile);
+      // Dispatch de l'action pour mettre à jour le store Redux
+      dispatch(updateProfile(response.data));
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du profil', error);
+      // Gestion des erreurs
+    }
   };
 
   return (
@@ -95,4 +103,3 @@ const ProfileForm = () => {
 };
 
 export default ProfileForm;
-

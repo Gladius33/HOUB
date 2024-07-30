@@ -72,5 +72,7 @@ router.post(
 
 router.put('/payment-info', authMiddleware, updatePaymentInfo);
 
-export default router;
+const userRoutes = router;
+export default userRoutes;
+
 

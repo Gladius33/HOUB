@@ -39,4 +39,6 @@ router.post(
 // @access  Private
 router.delete('/:gigId', authMiddleware, gigController.deleteGig);
 
-export default router;
+const gigRoutes = router;
+export default gigRoutes;
+

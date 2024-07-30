@@ -7,4 +7,6 @@ router.post('/', auth, createJob);
 router.get('/', getJobs);
 router.get('/:id', getJob);
 
-export default router;
+const jobRoutes = router;
+export default jobRoutes;
+

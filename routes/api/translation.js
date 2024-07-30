@@ -8,4 +8,6 @@ const router = express.Router();
 router.post('/', [auth, adminAuth], uploadTranslation);
 router.get('/', getTranslations);
 
-export default router;
+const translationRoutes = router;
+export default translationRoutes;
+

@@ -7,4 +7,6 @@ router.post('/', auth, createChat);
 router.get('/', auth, getChats);
 router.post('/message', auth, sendMessage);
 
-export default router;
+const chatRoutes = router;
+export default chatRoutes;
+

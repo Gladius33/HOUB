@@ -7,4 +7,6 @@ const router = express.Router();
 router.post('/create', authMiddleware, createPayment);
 router.get('/:id/status', authMiddleware, getPaymentStatus);
 
-export default router;
+const paymentRoutes = router;
+export default paymentRoutes;
+

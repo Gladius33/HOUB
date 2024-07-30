@@ -1,5 +1,4 @@
 import express from 'express';
-import getHomePage from '../controllers/homeController.js';
 import adminRoutes from './api/admin.js';
 import authRoutes from './api/auth.js';
 import categoryRoutes from './api/categories.js';
@@ -13,21 +12,20 @@ import jobRoutes from './api/jobs.js';
 import translationRoutes from './api/translation.js';
 import userRoutes from './api/users.js';
 
-const router = express.Router();
+const indexRoutes = express.Router();
 
-router.get('/', getHomePage);
-router.use('/api/admin', adminRoutes);
-router.use('/api/auth', authRoutes);
-router.use('/api/categories', categoryRoutes);
-router.use('/api/chats', chatRoutes);
-router.use('/api/contact', contactRoutes);
-router.use('/api/currencies', currencyRoutes);
-router.use('/api/freelances', freelanceRoutes);
-router.use('/api/employers', employerRoutes);
-router.use('/api/gigs', gigRoutes);
-router.use('/api/jobs', jobRoutes);
-router.use('/api/translation', translationRoutes);
-router.use('/api/users', userRoutes);
+indexRoutes.use('/api/admin', adminRoutes);
+indexRoutes.use('/api/auth', authRoutes);
+indexRoutes.use('/api/categories', categoryRoutes);
+indexRoutes.use('/api/chats', chatRoutes);
+indexRoutes.use('/api/contact', contactRoutes);
+indexRoutes.use('/api/currencies', currencyRoutes);
+indexRoutes.use('/api/freelances', freelanceRoutes);
+indexRoutes.use('/api/employers', employerRoutes);
+indexRoutes.use('/api/gigs', gigRoutes);
+indexRoutes.use('/api/jobs', jobRoutes);
+indexRoutes.use('/api/translation', translationRoutes);
+indexRoutes.use('/api/users', userRoutes);
 
-export default router;
+export default indexRoutes;
 

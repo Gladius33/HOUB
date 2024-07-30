@@ -31,4 +31,6 @@ router.post(
   employerController.upsertEmployer
 );
 
-export default router;
+const employerRoutes = router;
+export default employerRoutes;
+

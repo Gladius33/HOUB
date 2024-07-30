@@ -9,4 +9,6 @@ router.get('/', getCurrencies);
 router.post('/', [auth, adminAuth], createCurrency);
 router.put('/update-rates', [auth, adminAuth], updateCurrencyRates);
 
-export default router;
+const currencyRoutes = router;
+export default currencyRoutes;
+

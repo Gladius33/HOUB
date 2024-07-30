@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.post('/', sendContactMessage);
 
-export default router;
+const contactRoutes = router;
+export default contactRoutes;
+
