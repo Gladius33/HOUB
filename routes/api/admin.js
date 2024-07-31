@@ -1,6 +1,6 @@
 import express from 'express';
 import { updateCurrencyRates } from '../../controllers/adminController.js';
-import auth from '../../middleware/auth.js';
+import auth from '../../middleware/authMiddleware.js';
 import adminAuth from '../../middleware/adminAuth.js';
 
 const router = express.Router();

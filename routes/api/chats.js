@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import { createChat, getChats, sendMessage } from '../../controllers/chatController.js';
-import auth from '../../middleware/auth.js';
+import auth from '../../middleware/authMiddleware.js';
 
 router.post('/', auth, createChat);
 router.get('/', auth, getChats);

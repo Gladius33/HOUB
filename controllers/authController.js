@@ -2,11 +2,23 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import config from 'config';
+import { check, validationResult } from 'express-validator';
 
 const jwtSecret = config.get('jwtSecret');
 
 // Fonction d'inscription
 export async function register(req, res) {
+  // Validation des données entrantes
+  await check('name', 'Name is required').notEmpty().run(req);
+  await check('email', 'Please include a valid email').isEmail().run(req);
+  await check('password', 'Password must be at least 6 characters long').isLength({ min: 6 }).run(req);
+  await check('userType', 'User type is required').notEmpty().run(req);
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { name, email, password, userType } = req.body;
 
   try {
@@ -37,7 +49,7 @@ export async function register(req, res) {
       }
     };
 
-    jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
+    jwt.sign(payload, jwtSecret, { expiresIn: '1h' }, (err, token) => {
       if (err) throw err;
       res.json({ token });
     });
@@ -50,6 +62,15 @@ export async function register(req, res) {
 
 // Fonction de connexion
 export async function login(req, res) {
+  // Validation des données entrantes
+  await check('email', 'Please include a valid email').isEmail().run(req);
+  await check('password', 'Password is required').exists().run(req);
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { email, password } = req.body;
 
   try {
@@ -72,7 +93,7 @@ export async function login(req, res) {
       }
     };
 
-    jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
+    jwt.sign(payload, jwtSecret, { expiresIn: '1h' }, (err, token) => {
       if (err) throw err;
       res.json({ token });
     });
@@ -96,6 +117,17 @@ export async function getProfile(req, res) {
 
 // Fonction pour mettre à jour le profil utilisateur
 export async function updateProfile(req, res) {
+  // Validation des données entrantes pour les mises à jour
+  await check('email', 'Please include a valid email').optional().isEmail().run(req);
+  await check('dailyRateMin', 'Daily rate min must be a number').optional().isFloat().run(req);
+  await check('dailyRateMax', 'Daily rate max must be a number').optional().isFloat().run(req);
+  // (Ajouter d'autres vérifications selon les champs que vous souhaitez valider)
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const {
     name,
     email,
@@ -157,3 +189,4 @@ export default {
   getProfile,
   updateProfile
 };
+
