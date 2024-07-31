@@ -11,21 +11,25 @@ import gigRoutes from './api/gigs.js';
 import jobRoutes from './api/jobs.js';
 import translationRoutes from './api/translation.js';
 import userRoutes from './api/users.js';
+import paymentRoutes from './api/payment.js';
+import authMiddleware from '../middleware/authMiddleware.js';
+import adminAuth from '../middleware/adminAuth.js';
 
-const indexRoutes = express.Router();
+const router = express.Router();
 
-indexRoutes.use('/api/admin', adminRoutes);
-indexRoutes.use('/api/auth', authRoutes);
-indexRoutes.use('/api/categories', categoryRoutes);
-indexRoutes.use('/api/chats', chatRoutes);
-indexRoutes.use('/api/contact', contactRoutes);
-indexRoutes.use('/api/currencies', currencyRoutes);
-indexRoutes.use('/api/freelances', freelanceRoutes);
-indexRoutes.use('/api/employers', employerRoutes);
-indexRoutes.use('/api/gigs', gigRoutes);
-indexRoutes.use('/api/jobs', jobRoutes);
-indexRoutes.use('/api/translation', translationRoutes);
-indexRoutes.use('/api/users', userRoutes);
+router.use('/api/admin', adminAuth, adminRoutes);
+router.use('/api/auth', authMiddleware, authRoutes);
+router.use('/api/categories', categoryRoutes);
+router.use('/api/chats', authMiddleware, chatRoutes);
+router.use('/api/contact', contactRoutes);
+router.use('/api/currencies', currencyRoutes);
+router.use('/api/freelances', authMiddleware, freelanceRoutes);
+router.use('/api/employers', authMiddleware, employerRoutes);
+router.use('/api/gigs', gigRoutes);
+router.use('/api/jobs', jobRoutes);
+router.use('/api/translation', translationRoutes);
+router.use('/api/users', userRoutes);
+router.use('/api/payments', authMiddleware, paymentRoutes);
 
-export default indexRoutes;
+export default router;
 

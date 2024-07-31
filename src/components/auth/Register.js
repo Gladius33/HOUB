@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../../redux/actions/authActions.js';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,31 +13,35 @@ const Register = () => {
   });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [auth.isAuthenticated, navigate]);
 
   const { name, email, password, confirmPassword, userType } = formData;
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError('Passwords do not match');
     } else if (!userType) {
       setError('Please select a user type');
     } else {
-      try {
-        const response = await axios.post('/api/auth/register', { name, email, password, userType });
-        if (response.data.token) {
-          localStorage.setItem('token', response.data.token);
-          navigate('/dashboard');
-        } else {
-          setError('Failed to register');
-        }
-      } catch (err) {
-        setError('Failed to register');
-      }
+      dispatch(register({ name, email, password, userType }));
     }
   };
+
+  useEffect(() => {
+    if (auth.error) {
+      setError(auth.error);
+    }
+  }, [auth.error]);
 
   return (
     <div>
