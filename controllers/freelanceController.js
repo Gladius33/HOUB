@@ -31,7 +31,7 @@ export async function getFreelanceById(req, res) {
 }
 
 
-export async function upsertFreelance(req, res) {
+export async function updateFreelance(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -99,5 +99,5 @@ export async function upsertFreelance(req, res) {
 export default {
   getFreelances,
   getFreelanceById,
-  upsertFreelance
+  updateFreelance
 };

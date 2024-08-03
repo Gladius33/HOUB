@@ -8,18 +8,18 @@ const router = express.Router();
 // @route   GET api/gigs
 // @desc    Get all gigs
 // @access  Public
-router.get('/', gigController.getGigs);
+router.get('/gigs', gigController.getGigs);
 
 // @route   GET api/gigs/:gigId
 // @desc    Get gig by ID
 // @access  Public
-router.get('/:gigId', gigController.getGigById);
+router.get('/gigs/:gigId', gigController.getGigById);
 
 // @route   POST api/gigs
 // @desc    Create or update gig
 // @access  Private
 router.post(
-  '/',
+  '/gigs',
   [
     authMiddleware,
     [

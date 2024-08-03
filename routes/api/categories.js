@@ -5,8 +5,8 @@ import adminAuth from '../../middleware/adminAuth.js';
 
 const router = express.Router();
 
-router.get('/', getCategories);
-router.post('/', [auth, adminAuth], createCategory);
+router.get('/categories', getCategories);
+router.post('/categories', [auth, adminAuth], createCategory);
 
 const categoryRoutes = router;
 export default categoryRoutes;

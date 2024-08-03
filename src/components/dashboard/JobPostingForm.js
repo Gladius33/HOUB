@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import axios from '../../axiosConfig.js';
 
 const JobPostingForm = () => {
   const { t } = useTranslation();

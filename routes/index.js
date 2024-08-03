@@ -12,24 +12,35 @@ import jobRoutes from './api/jobs.js';
 import translationRoutes from './api/translation.js';
 import userRoutes from './api/users.js';
 import paymentRoutes from './api/payment.js';
-import authMiddleware from '../middleware/authMiddleware.js';
-import adminAuth from '../middleware/adminAuth.js';
 
 const router = express.Router();
 
-router.use('/api/admin', adminAuth, adminRoutes);
-router.use('/api/auth', authMiddleware, authRoutes);
+router.use('/api/admin', adminRoutes);
+router.use('/api/auth/register', authRoutes);
+router.use('/api/auth/login', authRoutes);
+router.use('api/auth/profile', authRoutes);
 router.use('/api/categories', categoryRoutes);
-router.use('/api/chats', authMiddleware, chatRoutes);
+router.use('/api/chat', chatRoutes);
+router.use('/api/message', chatRoutes);
 router.use('/api/contact', contactRoutes);
 router.use('/api/currencies', currencyRoutes);
-router.use('/api/freelances', authMiddleware, freelanceRoutes);
-router.use('/api/employers', authMiddleware, employerRoutes);
+router.use('/api/create-currency', currencyRoutes);
+router.use('/api/update-rates', currencyRoutes);
+router.use('/api/freelances', freelanceRoutes);
+router.use('/api/freelances/:userId', freelanceRoutes);
+router.use('/api/employers', employerRoutes);
+router.use('/api/employers/:userId', employerRoutes);
 router.use('/api/gigs', gigRoutes);
+router.use('/api/gigs/:gigId', gigRoutes);
 router.use('/api/jobs', jobRoutes);
-router.use('/api/translation', translationRoutes);
+router.use('/api/jobs/:id', jobRoutes);
+router.use('/api/translations', translationRoutes);
 router.use('/api/users', userRoutes);
-router.use('/api/payments', authMiddleware, paymentRoutes);
+router.use('/api/users/:userId', userRoutes);
+router.use('/api/users/admin', userRoutes);
+router.use('/api/users/payment-info', userRoutes);
+router.use('/api/payments/create', paymentRoutes);
+router.use('/api/payments/:id/status', paymentRoutes);
 
 export default router;
 

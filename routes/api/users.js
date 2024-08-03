@@ -9,18 +9,18 @@ const router = express.Router();
 // @route   GET api/users
 // @desc    Get all users
 // @access  Private
-router.get('/', authMiddleware, userController.getUsers);
+router.get('/users', authMiddleware, userController.getUsers);
 
 // @route   GET api/users/:userId
 // @desc    Get user by ID
 // @access  Private
-router.get('/:userId', authMiddleware, userController.getUserById);
+router.get('/users/:userId', authMiddleware, userController.getUserById);
 
 // @route   POST api/users
 // @desc    Create a new user
 // @access  Private
 router.post(
-  '/',
+  '/users',
   [
     authMiddleware,
     [
@@ -37,7 +37,7 @@ router.post(
 // @desc    Update user account
 // @access  Private
 router.put(
-  '/:userId',
+  '/users/:userId',
   [
     authMiddleware,
     [
@@ -52,13 +52,13 @@ router.put(
 // @route   DELETE api/users/:userId
 // @desc    Delete user
 // @access  Private
-router.delete('/:userId', authMiddleware, userController.deleteUser);
+router.delete('/users/:userId', authMiddleware, userController.deleteUser);
 
 // @route   POST api/users/admin
 // @desc    Create an admin
 // @access  Private
 router.post(
-  '/admin',
+  '/users/admin',
   [
     authMiddleware,
     [
@@ -70,7 +70,7 @@ router.post(
   userController.createAdmin
 );
 
-router.put('/payment-info', authMiddleware, updatePaymentInfo);
+router.put('/users/payment-info', authMiddleware, updatePaymentInfo);
 
 const userRoutes = router;
 export default userRoutes;

@@ -5,8 +5,8 @@ import adminAuth from '../../middleware/adminAuth.js';
 
 const router = express.Router();
 
-router.get('/', getCurrencies);
-router.post('/', [auth, adminAuth], createCurrency);
+router.get('/currencies', getCurrencies);
+router.post('/create-currency', [auth, adminAuth], createCurrency);
 router.put('/update-rates', [auth, adminAuth], updateCurrencyRates);
 
 const currencyRoutes = router;

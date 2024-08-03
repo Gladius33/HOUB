@@ -5,8 +5,8 @@ import adminAuth from '../../middleware/adminAuth.js';
 
 const router = express.Router();
 
-router.post('/', [auth, adminAuth], uploadTranslation);
-router.get('/', getTranslations);
+router.post('/translations', [auth, adminAuth], uploadTranslation);
+router.get('/translations', getTranslations);
 
 const translationRoutes = router;
 export default translationRoutes;

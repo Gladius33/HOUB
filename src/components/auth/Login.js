@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import axios from '../../axiosConfig.js';
 import { login } from '../../redux/actions/authActions.js';
 
 const Login = () => {
@@ -9,6 +10,7 @@ const Login = () => {
     password: ''
   });
 
+  const [localError, setLocalError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,19 +21,31 @@ const Login = () => {
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login({ email, password }));
+    try {
+      await axios.post('/api/auth/login', { email, password });
+      dispatch(login({ email, password }));
+    } catch (error) {
+      const errorMsg = error.response && error.response.data ? error.response.data.errors : [{ msg: 'Login failed' }];
+      setLocalError(errorMsg.map(err => err.msg).join(', '));
+      dispatch(authError('Login failed: ' + (error.message || 'Unknown error')));
+    }
   };
 
-  if (isAuthenticated) {
-    navigate('/dashboard');
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+    if (error) {
+      setLocalError(error);
+    }
+  }, [isAuthenticated, error, navigate]);
 
   return (
     <div>
       <h1>Login</h1>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {localError && <div style={{ color: 'red' }}>{localError}</div>}
       <form onSubmit={onSubmit}>
         <div>
           <input

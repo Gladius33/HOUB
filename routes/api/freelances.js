@@ -8,18 +8,18 @@ const router = express.Router();
 // @route   GET api/freelances
 // @desc    Get all freelances
 // @access  Public
-router.get('/', freelanceController.getFreelances);
+router.get('/freelances', freelanceController.getFreelances);
 
 // @route   GET api/freelances/:userId
 // @desc    Get freelance by user ID
 // @access  Public
-router.get('/:userId', freelanceController.getFreelanceById);
+router.get('/freelances/:userId', freelanceController.getFreelanceById);
 
 // @route   POST api/freelances
 // @desc    Create or update freelance profile
 // @access  Private
 router.post(
-  '/',
+  '/freelances',
   [
     authMiddleware,
     [
@@ -29,7 +29,7 @@ router.post(
       check('hourlyRate', 'Hourly rate is required').not().isEmpty()
     ]
   ],
-  freelanceController.upsertFreelance
+  freelanceController.updateFreelance
 );
 
 const freelanceRoutes = router;

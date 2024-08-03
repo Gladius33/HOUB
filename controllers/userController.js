@@ -82,11 +82,6 @@ export async function createUser(req, res) {
   }
 }
 
-// Fonction pour mettre à jour ou ajouter un utilisateur (obsolete avec la séparation)
-export async function upsertUser(req, res) {
-  res.status(405).send('upsertUser function is obsolete. Use createUser or updateAccount instead.');
-}
-
 // Fonction pour mettre à jour un utilisateur existant
 export async function updateAccount(req, res) {
   const errors = validationResult(req);

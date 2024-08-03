@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../../redux/actions/authActions.js';
+import axios from '../../axiosConfig.js';
+import { registerSuccess, registerFail, authError } from '../../redux/actions/authActions.js';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ const Register = () => {
     confirmPassword: '',
     userType: ''
   });
-  const [error, setError] = useState(null);
+  const [localError, setLocalError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
@@ -26,27 +27,36 @@ const Register = () => {
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setLocalError('Passwords do not match');
     } else if (!userType) {
-      setError('Please select a user type');
+      setLocalError('Please select a user type');
     } else {
-      dispatch(register({ name, email, password, userType }));
+      setLocalError(null);
+      try {
+        const res = await axios.post('/api/users', { name, email, password, userType });
+        dispatch(registerSuccess(res.data));
+      } catch (error) {
+        const errorMsg = error.response && error.response.data ? error.response.data.errors : [{ msg: 'Registration failed' }];
+        setLocalError(errorMsg.map(err => err.msg).join(', '));
+        dispatch(registerFail(errorMsg));
+        dispatch(authError('Registration failed: ' + (error.message || 'Unknown error')));
+      }
     }
   };
 
   useEffect(() => {
     if (auth.error) {
-      setError(auth.error);
+      setLocalError(auth.error);
     }
   }, [auth.error]);
 
   return (
     <div>
       <h1>Register</h1>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {localError && <div style={{ color: 'red' }}>{localError}</div>}
       <form onSubmit={onSubmit}>
         <div>
           <input type="text" placeholder="Name" name="name" value={name} onChange={onChange} required />

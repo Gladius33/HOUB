@@ -1,6 +1,5 @@
 import express, { Router } from 'express';
 import router from './routes/index.js';
-import json from 'express';
 import cors from 'cors';
 import serveStatic from 'serve-static';
 import connectDB from './config/db.js';
@@ -8,24 +7,38 @@ import config from 'config';
 import { resolve } from 'path';
 import User from './models/User.js';
 import Currency from './models/Currency.js';
-import bcrypt from 'bcryptjs'; 
+import bcrypt from 'bcryptjs';
+import authenticateJWT from './middleware/authMiddleware.js';
 
 const app = express();
 connectDB();
 
-app.use(json({ extended: false }));
-app.use(cors());
-app.use('/api', router);
-
+const allowedOrigins = [
+  'http://192.168.1.171:8080',
+  'http://192.168.1.171:8080/register',
+  'http://192.168.1.171:8080/login',
+  'http://192.168.1.171:8080/jobs',
+  'http://192.168.1.171:8080/admin',
+  'http://192.168.1.171:8080/chats'
+];
 
 const corsOptions = {
-  origin: 'http://localhost:8080',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
+app.use(express.json());
+app.use('/api', authenticateJWT, router);
+app.use('/api', router);
 
 const createDefaultAdmin = async () => {
   try {
@@ -80,7 +93,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   // Si le frontend est sur un serveur distinct
   app.get('*', (req, res) => {
-    res.redirect('http://localhost:8080' + req.originalUrl);
+    res.redirect('http://localhost:5000' + req.originalUrl);
   });
 }
 

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import axios from '../../axiosConfig.js';
 import { updateProfile } from '../../redux/actions/profileActions.js';
 
 const ProfileForm = () => {
