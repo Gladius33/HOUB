@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from '../../axiosConfig.js';
-import { registerSuccess, registerFail, authError } from '../../redux/actions/authActions.js';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../../redux/slices/authSlice.js';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,15 +12,15 @@ const Register = () => {
     userType: ''
   });
   const [localError, setLocalError] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const auth = useSelector(state => state.auth);
-  
+
   useEffect(() => {
-    if (auth.isAuthenticated) {
+    if (auth.token) {
       navigate('/dashboard');
     }
-  }, [auth.isAuthenticated, navigate]);
+  }, [auth.token, navigate]);
 
   const { name, email, password, confirmPassword, userType } = formData;
 
@@ -35,15 +34,7 @@ const Register = () => {
       setLocalError('Please select a user type');
     } else {
       setLocalError(null);
-      try {
-        const res = await axios.post('/api/users', { name, email, password, userType });
-        dispatch(registerSuccess(res.data));
-      } catch (error) {
-        const errorMsg = error.response && error.response.data ? error.response.data.errors : [{ msg: 'Registration failed' }];
-        setLocalError(errorMsg.map(err => err.msg).join(', '));
-        dispatch(registerFail(errorMsg));
-        dispatch(authError('Registration failed: ' + (error.message || 'Unknown error')));
-      }
+      dispatch(register(formData));
     }
   };
 

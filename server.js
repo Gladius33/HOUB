@@ -1,14 +1,14 @@
-import express, { Router } from 'express';
-import router from './routes/index.js';
+import express from 'express';
 import cors from 'cors';
-import serveStatic from 'serve-static';
+import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import config from 'config';
+import router from './routes/index.js';
+import serveStatic from 'serve-static';
 import { resolve } from 'path';
 import User from './models/User.js';
 import Currency from './models/Currency.js';
 import bcrypt from 'bcryptjs';
-import authenticateJWT from './middleware/authMiddleware.js';
 
 const app = express();
 connectDB();
@@ -37,7 +37,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use('/api', authenticateJWT, router);
+app.use(cookieParser());
+
+// Appliquer le middleware d'authentification
 app.use('/api', router);
 
 const createDefaultAdmin = async () => {
@@ -65,7 +67,7 @@ const createDefaultAdmin = async () => {
 const createDefaultCurrencies = async () => {
   try {
     const defaultCurrenciesExists = await Currency.find({ code: { $in: ['USD', 'EUR', 'RUB', 'BTC', 'XMR'] } });
-    
+
     if (defaultCurrenciesExists.length === 0) {
       const defaultCurrencies = [
         { code: 'USD', name: 'United States Dollar', type: 'fiat', symbol: '$', exchangeRates: { EUR: 0.85, BTC: 0.00002 }, decimals: 2 },
@@ -104,4 +106,3 @@ app.listen(PORT, () => {
   createDefaultAdmin();
   createDefaultCurrencies();
 });
-

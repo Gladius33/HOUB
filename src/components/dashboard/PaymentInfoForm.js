@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updatePaymentInfo } from '../../actions/freelanceActions.js';
+import { updatePaymentInfo } from '../../redux/slices/profileSlice.js';
 
 const PaymentInfoForm = () => {
   const [paymentInfo, setPaymentInfo] = useState({
