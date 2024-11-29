@@ -1,23 +1,28 @@
 import express from 'express';
-import{ check } from 'express-validator';
+import { check } from 'express-validator';
 import freelanceController from '../../controllers/freelanceController.js';
 import authMiddleware from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// @route   GET api/freelances
-// @desc    Get all freelances
-// @access  Public
-router.get('/freelances', freelanceController.getFreelances);
+router.get('/freelances', async (req, res) => {
+  try {
+    const freelances = await freelanceController.getFreelances(req, res);
+    res.json(freelances);
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
 
-// @route   GET api/freelances/:userId
-// @desc    Get freelance by user ID
-// @access  Public
-router.get('/freelances/:userId', freelanceController.getFreelanceById);
+router.get('/freelances/:userId', async (req, res) => {
+  try {
+    const freelance = await freelanceController.getFreelanceById(req, res);
+    res.json(freelance);
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
 
-// @route   POST api/freelances
-// @desc    Create or update freelance profile
-// @access  Private
 router.post(
   '/freelances',
   [
@@ -29,9 +34,14 @@ router.post(
       check('hourlyRate', 'Hourly rate is required').not().isEmpty()
     ]
   ],
-  freelanceController.updateFreelance
+  async (req, res) => {
+    try {
+      const freelance = await freelanceController.updateFreelance(req, res);
+      res.json(freelance);
+    } catch (error) {
+      res.status(500).json({ msg: 'Server error', error: error.message });
+    }
+  }
 );
 
-const freelanceRoutes = router;
-export default freelanceRoutes;
-
+export default router;

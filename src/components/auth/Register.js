@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../redux/slices/authSlice.js';
+import jwt from 'jsonwebtoken';
+import { getCookie } from 'cookies-next';
+import { jwtSecret } from 'config';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -17,8 +20,12 @@ const Register = () => {
   const auth = useSelector(state => state.auth);
 
   useEffect(() => {
-    if (auth.token) {
-      navigate('/dashboard');
+    const token = getCookie('jwtToken');
+    if (token) {
+      const decodedToken = jwt.verify(token, jwtSecret);
+      if (decodedToken) {
+        navigate('/dashboard');
+      }
     }
   }, [auth.token, navigate]);
 

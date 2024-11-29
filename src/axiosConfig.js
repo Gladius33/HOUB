@@ -3,6 +3,8 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:5000';
 axios.defaults.origin = 'http://localhost:8080'
 axios.defaults.withCredentials = true;
+axios.defaults.responseType = 'json';
+axios.defaults.requestType = 'json';
 
 const token = localStorage.getItem('authToken');
 

@@ -8,12 +8,26 @@ const router = express.Router();
 // @route   GET api/gigs
 // @desc    Get all gigs
 // @access  Public
-router.get('/gigs', gigController.getGigs);
+router.get('/gigs', async (req, res) => {
+  try {
+    const gigs = await gigController.getGigs(req, res);
+    res.json(gigs);
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
 
 // @route   GET api/gigs/:gigId
 // @desc    Get gig by ID
 // @access  Public
-router.get('/gigs/:gigId', gigController.getGigById);
+router.get('/gigs/:gigId', async (req, res) => {
+  try {
+    const gig = await gigController.getGigById(req, res);
+    res.json(gig);
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
 
 // @route   POST api/gigs
 // @desc    Create or update gig
@@ -31,14 +45,27 @@ router.post(
       check('remote', 'Remote status is required').not().isEmpty()
     ]
   ],
-  gigController.upsertGig
+  async (req, res) => {
+    try {
+      const gig = await gigController.upsertGig(req, res);
+      res.json(gig);
+    } catch (error) {
+      res.status(500).json({ msg: 'Server error', error: error.message });
+    }
+  }
 );
 
 // @route   DELETE api/gigs/:gigId
 // @desc    Delete gig
 // @access  Private
-router.delete('/:gigId', authMiddleware, gigController.deleteGig);
+router.delete('/:gigId', authMiddleware, async (req, res) => {
+  try {
+    await gigController.deleteGig(req, res);
+    res.json({ msg: 'Gig deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
 
 const gigRoutes = router;
 export default gigRoutes;
-

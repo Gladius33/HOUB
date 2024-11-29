@@ -5,19 +5,24 @@ import authMiddleware from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// @route   GET api/employers
-// @desc    Get all employers
-// @access  Public
-router.get('/employers', employerController.getEmployers);
+router.get('/employers', async (req, res) => {
+  try {
+    const employers = await employerController.getEmployers(req, res);
+    res.json(employers);
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
 
-// @route   GET api/employers/:userId
-// @desc    Get employer by user ID
-// @access  Public
-router.get('/employers/:userId', employerController.getEmployerById);
+router.get('/employers/:userId', async (req, res) => {
+  try {
+    const employer = await employerController.getEmployerById(req, res);
+    res.json(employer);
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
 
-// @route   POST api/employers
-// @desc    Create or update employer profile
-// @access  Private
 router.post(
   '/employers',
   [
@@ -28,9 +33,14 @@ router.post(
       check('detailedDescription', 'Detailed description is required').not().isEmpty()
     ]
   ],
-  employerController.upsertEmployer
+  async (req, res) => {
+    try {
+      const employer = await employerController.upsertEmployer(req, res);
+      res.json(employer);
+    } catch (error) {
+      res.status(500).json({ msg: 'Server error', error: error.message });
+    }
+  }
 );
 
-const employerRoutes = router;
-export default employerRoutes;
-
+export default router;

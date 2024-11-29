@@ -1,18 +1,21 @@
 import pkg from 'jsonwebtoken';
 const { verify } = pkg;
 import config from 'config';
-import { getCookie } from 'cookies-next';
 
 export default function (req, res, next) {
-  // Recherche du jeton dans le cookie
-  const token = getCookie('token', { req, res });
-
-  if (!token) {
+  const authHeader = req.header('Authorization');
+  
+  if (!authHeader) {
     return res.status(401).json({ msg: 'No token, authorization denied' });
   }
 
+  const token = authHeader.split(' ')[1];
+  
+  if (!token) {
+    return res.status(401).json({ msg: 'Token not found' });
+  }
+
   try {
-    // Vérification du jeton
     const decoded = verify(token, config.get('jwtSecret'));
     req.user = decoded.user;
     next();

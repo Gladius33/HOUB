@@ -5,9 +5,22 @@ import adminAuth from '../../middleware/adminAuth.js';
 
 const router = express.Router();
 
-router.get('/categories', getCategories);
-router.post('/categories', [auth, adminAuth], createCategory);
+router.get('/categories', async (req, res) => {
+  try {
+    const categories = await getCategories(req, res);
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
 
-const categoryRoutes = router;
-export default categoryRoutes;
+router.post('/categories', [auth, adminAuth], async (req, res) => {
+  try {
+    const category = await createCategory(req, res);
+    res.json(category);
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
 
+export default router;

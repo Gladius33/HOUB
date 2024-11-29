@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axiosConfig.js';
-import { setCookie, removeCookie, getCookie } from 'cookies-next';
+import { setCookie, removeCookie } from 'cookies-next';
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from 'config';
 
 export const register = createAsyncThunk(
   'auth/register',
@@ -11,7 +13,10 @@ export const register = createAsyncThunk(
           'Content-Type': 'application/json'
         }
       });
-      setCookie('authToken', res.data.token);
+      const { token } = res.data;
+      // Vérifier le token et le stocker dans un cookie
+      jwt.verify(token, jwtSecret);
+      setCookie('authToken', token, { maxAge: 60 * 60 * 24 * 7, secure: true, sameSite: 'Strict' });
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data || error.message);
@@ -28,7 +33,10 @@ export const login = createAsyncThunk(
           'Content-Type': 'application/json'
         }
       });
-      setCookie('authToken', res.data.token);
+      const { token } = res.data;
+      // Vérifier le token et le stocker dans un cookie
+      jwt.verify(token, jwtSecret);
+      setCookie('authToken', token, { maxAge: 60 * 60 * 24 * 7, secure: true, sameSite: 'Strict' });
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data || error.message);

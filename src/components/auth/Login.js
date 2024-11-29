@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../redux/slices/authSlice.js';
+import { getCookie } from 'cookies-next';
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from 'config';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +29,16 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/dashboard');
+      // Vérification du token dans le cookie
+      const token = getCookie('authToken');
+      if (token) {
+        try {
+          jwt.verify(token, jwtSecret);
+          navigate('/dashboard');
+        } catch (e) {
+          setLocalError('Invalid token');
+        }
+      }
     }
     if (error) {
       setLocalError(error);
@@ -68,3 +80,4 @@ const Login = () => {
 };
 
 export default Login;
+

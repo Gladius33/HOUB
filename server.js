@@ -9,6 +9,7 @@ import { resolve } from 'path';
 import User from './models/User.js';
 import Currency from './models/Currency.js';
 import bcrypt from 'bcryptjs';
+import authenticateJWT from './middleware/authMiddleware.js';
 
 const app = express();
 connectDB();
@@ -19,28 +20,38 @@ const allowedOrigins = [
   'http://192.168.1.171:8080/login',
   'http://192.168.1.171:8080/jobs',
   'http://192.168.1.171:8080/admin',
-  'http://192.168.1.171:8080/chats'
+  'http://192.168.1.171:8080/chats',
+  'http://127.0.0.1:8080',
+  'http://127.0.0.1:8080/register',
+  'http://127.0.0.1:8080/login',
+  'http://127.0.0.1:8080/jobs',
+  'http://127.0.0.1:8080/admin',
+  'http://127.0.0.1:8080/chats'
 ];
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
+      if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true); // Origine autorisée
+      } else {
+          callback(new Error('Not allowed by CORS')); // Origine refusée
+      }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
+app.use('/api', authenticateJWT, router);
 
-// Appliquer le middleware d'authentification
-app.use('/api', router);
+// Middleware de gestion des erreurs
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
 
 const createDefaultAdmin = async () => {
   try {
@@ -93,7 +104,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(resolve('client', 'build', 'index.html'));
   });
 } else {
-  // Si le frontend est sur un serveur distinct
   app.get('*', (req, res) => {
     res.redirect('http://localhost:5000' + req.originalUrl);
   });
