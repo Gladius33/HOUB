@@ -10,6 +10,7 @@ import User from './models/User.js';
 import Currency from './models/Currency.js';
 import bcrypt from 'bcryptjs';
 import authenticateJWT from './middleware/authMiddleware.js';
+import rateLimit from 'express-rate-limit';
 
 const app = express();
 connectDB();
@@ -46,6 +47,15 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api', authenticateJWT, router);
+
+// Rate limiter setup
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
+// Apply rate limiter to all requests
+app.use(limiter);
 
 // Middleware de gestion des erreurs
 app.use((err, req, res, next) => {
@@ -100,7 +110,7 @@ const createDefaultCurrencies = async () => {
 
 if (process.env.NODE_ENV === 'production') {
   app.use(serveStatic('client/build'));
-  app.get('*', (req, res) => {
+  app.get('*', limiter, (req, res) => {
     res.sendFile(resolve('client', 'build', 'index.html'));
   });
 } else {
