@@ -48,7 +48,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(lusca.csrf());
-app.use('/api', authenticateJWT, router);
+app.use('/api', authenticateJWT, limiter, router);
 
 // Rate limiter setup
 const limiter = rateLimit({
