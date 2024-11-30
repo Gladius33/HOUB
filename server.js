@@ -11,6 +11,7 @@ import Currency from './models/Currency.js';
 import bcrypt from 'bcryptjs';
 import authenticateJWT from './middleware/authMiddleware.js';
 import rateLimit from 'express-rate-limit';
+import lusca from 'lusca';
 
 const app = express();
 connectDB();
@@ -46,6 +47,7 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(lusca.csrf());
 app.use('/api', authenticateJWT, router);
 
 // Rate limiter setup
