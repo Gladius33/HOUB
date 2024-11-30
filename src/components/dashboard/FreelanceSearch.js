@@ -9,7 +9,7 @@ const FreelanceSearch = () => {
   const [location, setLocation] = useState('');
 
   const handleSearch = () => {
-    // Logic for searching freelancers based on the criteria
+    // Logique de recherche des freelances basée sur critères à ajouter
   };
 
   return (
