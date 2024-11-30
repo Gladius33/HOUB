@@ -1,7 +1,6 @@
 import User from '../models/User.js';
 import { validationResult } from 'express-validator';
 
-// Fonction pour obtenir tous les utilisateurs
 export async function getUsers(req, res) {
   try {
     const users = await User.find().select('-password');
@@ -12,7 +11,6 @@ export async function getUsers(req, res) {
   }
 }
 
-// Fonction pour obtenir un utilisateur par son ID
 export async function getUserById(req, res) {
   try {
     const user = await User.findById(req.params.userId).select('-password');
@@ -29,7 +27,6 @@ export async function getUserById(req, res) {
   }
 }
 
-// Fonction pour créer un nouvel utilisateur
 export async function createUser(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -67,7 +64,6 @@ export async function createUser(req, res) {
       notifications
     });
 
-    // Logique spécifique en fonction du type d'utilisateur
     if (userType === 'freelance') {
       // Logique spécifique pour les freelances
     } else if (userType === 'employer') {
@@ -82,7 +78,6 @@ export async function createUser(req, res) {
   }
 }
 
-// Fonction pour mettre à jour un utilisateur existant
 export async function updateAccount(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -134,7 +129,6 @@ export async function updateAccount(req, res) {
   }
 }
 
-// Fonction pour supprimer un utilisateur
 export async function deleteUser(req, res) {
   try {
     await User.findByIdAndRemove(req.params.userId);
@@ -148,7 +142,6 @@ export async function deleteUser(req, res) {
   }
 }
 
-// Fonction pour créer un admin
 export async function createAdmin(req, res) {
   const { name, email, password } = req.body;
 
