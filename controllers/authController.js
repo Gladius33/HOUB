@@ -6,7 +6,6 @@ import { check, validationResult } from 'express-validator';
 
 const jwtSecret = config.get('jwtSecret');
 
-// Fonction d'inscription
 export async function register(req, res) {
   // Validation des données entrantes
   await check('name', 'Name is required').notEmpty().run(req);
@@ -22,13 +21,11 @@ export async function register(req, res) {
   const { name, email, password, userType } = req.body;
 
   try {
-    // Vérifier si l'utilisateur existe déjà
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
     }
 
-    // Créer une nouvelle instance d'utilisateur
     user = new User({
       name,
       email,
@@ -36,13 +33,11 @@ export async function register(req, res) {
       userType
     });
 
-    // Hacher le mot de passe avant de le sauvegarder
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
 
-    // Générer un token JWT
     const payload = {
       user: {
         id: user.id
@@ -60,7 +55,6 @@ export async function register(req, res) {
   }
 }
 
-// Fonction de connexion
 export async function login(req, res) {
   // Validation des données entrantes
   await check('email', 'Please include a valid email').isEmail().run(req);
@@ -74,19 +68,16 @@ export async function login(req, res) {
   const { email, password } = req.body;
 
   try {
-    // Vérifier si l'utilisateur existe
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
     }
 
-    // Vérifier le mot de passe
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
     }
 
-    // Générer un token JWT
     const payload = {
       user: {
         id: user.id
@@ -104,7 +95,6 @@ export async function login(req, res) {
   }
 }
 
-// Fonction pour obtenir le profil utilisateur
 export async function getProfile(req, res) {
   try {
     const user = await User.findById(req.user.id).select('-password');
@@ -115,9 +105,7 @@ export async function getProfile(req, res) {
   }
 }
 
-// Fonction pour mettre à jour le profil utilisateur
 export async function updateProfile(req, res) {
-  // Validation des données entrantes pour les mises à jour
   await check('email', 'Please include a valid email').optional().isEmail().run(req);
   await check('dailyRateMin', 'Daily rate min must be a number').optional().isFloat().run(req);
   await check('dailyRateMax', 'Daily rate max must be a number').optional().isFloat().run(req);
